@@ -2,7 +2,7 @@
 
 ## Overview
 
-Book Recommendations is an SPA that allows users to enter/update book recommendations.  The app will organize the listing of recommendations based on the data in the events and user choices.
+Url Aggregator is an SPA that allows users to enter/tag/upvote urls.  Users will enter urls and give each a title.  Users can see the complete list of urls ranked by upvotes and can apply their own votes in favor of those urls with interesting content. 
 
 ## Purpose
 
