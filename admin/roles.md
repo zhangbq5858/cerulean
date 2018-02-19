@@ -1,4 +1,4 @@
-# Team Primary Roles/Responsibilities
+# Roles & Responsibilities
 
 **Bin Shi - Service JS**
 * project admin
