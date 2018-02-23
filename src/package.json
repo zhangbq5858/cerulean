@@ -1,0 +1,27 @@
+{
+  "name": "urlagg",
+  "version": "1.0.0",
+  "description": "Url Aggregator by Team Cerulean",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seainfo6250/cerulean.git"
+  },
+  "keywords": [
+    "url",
+    "aggregator"
+  ],
+  "author": "{ @camillechi | @iShiBin | @jingyilin1995 | @zhangbq5858 }",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seainfo6250/cerulean/issues"
+  },
+  "homepage": "https://github.com/seainfo6250/cerulean#readme",
+  "dependencies": {
+    "browserify": "^16.1.0",
+    "express": "^4.16.2"
+  }
+}
