@@ -66,6 +66,7 @@ app.post('/add',(req, resp) => {
     const tag = req.body.tag;
     const summary = req.body.summray;
     const Link = createLink(url, title, tag, summary);
+    LinksMap[Link.id] = Link;
     resp.send(JSON.stringify(Link));
 });
 
@@ -75,6 +76,7 @@ app.post('/edit',(req, resp) => {
     Link.title = req.body.title;
     Link.tag = req.body.tag;
     Link.summary = req.body.summary;
+    LinksMap[id] = Link;
     resp.send(JSON.stringify(Link));
 });
 
@@ -93,7 +95,7 @@ app.post('/vote', (req, resp) => {
 
 app.post('/title',(req,resp) => {
    // const url = "http://cloudplatform.googleblog.com/2018/02/how-Google-Cloud-Storage-offers-strongly-consistent-object-listing-thanks-to-Spanner.html";
-   const url = "https://blog.cryptographyengineering.com/2018/01/16/icloud-in-china/"; 
+   const url = "https://blog.cryptographyengineering.com/2018/01/16/icloud-in-china/";
    let h;
     if(url.startsWith("https")){
         h = https;
@@ -105,7 +107,7 @@ app.post('/title',(req,resp) => {
         res.setEncoding("utf-8");//防止中文乱码
         res.on('data',function(chunk){
             html  += chunk;
-   
+
         }
         );//监听data事件，每次取一块数据
         res.on('end',function(){
@@ -116,16 +118,16 @@ app.post('/title',(req,resp) => {
 
             var title = $("title").text().trim();//获取文章的标题
 
-           // var link = $(".atrctitle .contenttitle a").attr("href");//获取文章的网页地址
+           // var link = $(".atrcwtitle .contenttitle a").attr("href");//获取文章的网页地址
 
             let newitem = {};
             newitem.title = title;
            // newitem.link = link;
-            console.log(newitem); 
+            console.log(newitem);
             resp.send(JSON.stringify(newitem));});//监听end事件，如果整个网页内容都获取完毕，执行回调函数
 
     }).on('error',function (err) {
-        console.log(err); 
+        console.log(err);
     });
 });
 
