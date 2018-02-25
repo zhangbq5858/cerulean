@@ -45,9 +45,10 @@ function resetInput(){
 function transUrlToInput(obj){
 	let str = '';
 	let type = 'text';
-	Object.entries(obj).forEach(([key,value]) => {
-		str += `<input type=${type} name=${key} value=${value} disabled='disabled'>`;
-	});
+	for(key in obj){
+		if(key === "id") continue;
+		str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+	}
 	return str;
 } 
 
@@ -184,7 +185,7 @@ function checkEditInput(e){
 	}else if ( key === 'url' ){
 		e.addEventListener( 'blur',renderEditUrlMessage );
 	}else if ( key === 'tag' ){
-		e.addEventListener( 'blur',renderEditTageMessage );
+	//	e.addEventListener( 'blur',renderEditTageMessage );
 	}else if ( key === 'summery' ){
 		e.addEventListener( 'blur',renderSummeryMessage );
 	}
@@ -224,10 +225,10 @@ function renderEditUrlMessage(){
 	this.parentNode.nextSibling.innerHTML = warnMessage;
 }
 
-function renderEditTageMessage(){
-	checkTagInput(this);
-	this.parentNode.nextSibling.innerHTML = warnMessage;
-}
+// function renderEditTageMessage(){
+// 	checkTagInput(this);
+// 	this.parentNode.nextSibling.innerHTML = warnMessage;
+// }
 
 function renderEditSummaryMessage(){
 	checkSummaryInput(this);
@@ -268,17 +269,19 @@ function clickSaveFunc(){
     child.forEach( e => {
     	e.getAttribute( 'disabled','disabled' );
     } )
-	performEditPostRequest(LinksMap[parent.id]);
+	performEditPostRequest(LinksMap[this.parentNode.attributes["id"].value]);
 	toggleVisible(this, 0);
 }
 
 function clickEditFunc(){
 	const child = this.parentNode.childNodes;
-	child.forEach( e => {
+	for(let i = 0; i  < 4; i++){
+		if(i === 1) continue;
+		let e = child[i];
 		checkEditInput(e);
 		e.removeAttribute('disabled');
-	} );
-	child[0].focus();
+	}
+	child[1].focus();
 	toggleVisible(this, -1);
 }
 
@@ -330,9 +333,9 @@ function toggleVisible(node, cur) {//实际需要根据效果更改
 	node.style.display = 'none';
 	
 	if( cur === -1 ){
-	 node.parentNode.nextSibling.childNode.style.display = 'none';
-	 node.parentNode.nextSibling.nextSibling.childNode.style.display = 'inline';
-	 node.parentNode.nextSibling.nextSibling.nextSibling.childNode.style.display = 'inline';
+	 node.nextSibling.style.display = 'none';
+	 node.nextSibling.nextSibling.style.display = 'inline';
+	 node.nextSibling.nextSibling.nextSibling.style.display = 'inline';
 	}else if ( cur === 0 ){
 	 node.parentNode.nextSibling.childNode.style.display = 'none';
 	 node.parentNode.previousSibling.childNode.style.display = 'inline'
@@ -361,7 +364,7 @@ function addClickListener(){
 	sportsButton.addEventListener('click',clickSports);
 	//allButton.addEventListener('click',clickSports);
 	sortByButton.addEventListener( 'click',clickSort ); 
-	Array.from(document.getElementsByClassName('show-list')).forEach(element =>
+	Array.from(document.getElementsByClassName('url-content')).forEach(element =>
     element.addEventListener('click', toggleComplete)
   );
 }
