@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" media="screen" href="cerulean.css" />
 </head>
+
 <body>
-    <div class="page-container"> 
+    <div class="page-container">
         <div class="header-container">
             <!-- Username Display -->
             <div id="userName" class="user-name">User Name</div>
             <div class="header">
                 <h2>SurfVibes</h2>
             </div>
+
+            <div class="warn-message">
+
+            </div>
             <!-- Add URL -->
-            <form id="addUrl">
-                <label class="title">Title</label>
-                <input class="title" type="text">
-                <label class="url">URL</label>
-                <input class="url" type="url">
-                <label class="field">Field</label>
-                <select name="field-added" id="addField">
+            <form class="input-form">
+                <label class="title-input">Title</label>
+                <input class="title-input" type="text">
+                <label class="url-input">URL</label>
+                <input class="url-input" type="url">
+                <label class="author-input">Author</label>
+                <input class="author-input" type="author">
+                <label class="tag-dropdown">Field</label>
+                <select name="show-list">
                     <option id="education" value="education">Education</option>
                     <option id="entertainment" value="entertainment">Entertainment</option>
                     <option id="finance" value="finance">Finance</option>
                     <option id="politics" value="politics">Politics</option>
                     <option id="sports" value="sports">Sports</option>
                 </select>
-                <label class="summary">Summary</label>
-                <textarea class="summary" type="text"></textarea>
+                <label class="summary-input">Summary</label>
+                <textarea class="summary-input" type="text"></textarea>
                 <div id="addBtn">
-                    <button class="formBtn" type="submit">Submit</button>
-                    <button class="formBtn" type="reset">Reset</button>
+                    <button class="submit-button" type="submit">Submit</button>
+                    <button class="reset-button" type="reset">Reset</button>
                 </div>
             </form>
 
         </div>
     </div>
     <!-- Sort By -->
-    <div class="sort">
+    <div class="sort-dropdown">
         <label class="nav-main-sort">Sort By </label>
         <select name="sort-by" id="sortyBy">
             <option id="title" value="title">Title</option>
@@ -45,20 +53,20 @@
             <option id="voteNumber" value="number-of-vote">Popularity</option>
         </select>
     </div>
-   
+
     <!-- Top Tags -->
-    <div class="main-container" >
-        <div class="topnav" style="background-color:bisque">
-            <a href="#">Education</a>
-            <a href="#">Entertainment</a>
-            <a href="#">Finance</a>
-            <a href="#">Politics</a>
-            <a href="#">Sports</a>
+    <div class="main-container">
+        <div class="topnav">
+            <button class="eudcaiton-Button">Education</button>
+            <button class="entertainment-Button">Entertainment</button>
+            <button class="finance-Button">Finance</button>
+            <button class="politics-Button">Politics</button>
+            <button class="sports-Button">Sports</button>
         </div>
         <!-- Content area -->
-        <div class="url-container url-content" >
+        <div class="url-container url-content">
             <div class="display-container">
-                <div class="url-tag-header" style="background-color:firebrick">
+                <div class="url-tag-header">
                     <h4>Number</h4>
                     <h4>Title</h4>
                     <h4>Author</h4>
@@ -67,20 +75,13 @@
                 </div>
                 <ul class="url-content">
                 </ul>
-            </div>   
+                <div class="function-buttons">
+
+                </div>
+            </div>
         </div>
     </div>
-    
-    <!-- Infinite Scroll -->
-    <div class="center">
-        <div class="pagination">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">&raquo;</a>
-        </div>
-    </div>
-    
+
 </body>
+
 </html>
