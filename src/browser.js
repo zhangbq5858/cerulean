@@ -3,43 +3,37 @@
 const submitButton = document.querySelector('.submit-button');
 const resetButton = document.querySelector('.reset-button');
 
-const all-Button = document.querySelector('.all-Button');
-const education-Button = document.querySelector('.education-Button');
-const entertainment-Button = document.querySelector('.entertainment-Button');
-const finance-Button = document.querySelector('.finance-Button');
-const politics-Button = document.querySelector('.politics-Button');
-const sports-Button = document.querySelector('.sports-Button');
+const allButton = document.querySelector('.all-Button');
+const educationButton = document.querySelector('.education-Button');
+const entertainmentButton = document.querySelector('.entertainment-Button');
+const financeButton = document.querySelector('.finance-Button');
+const politicsButton = document.querySelector('.politics-Button');
+const sportsButton = document.querySelector('.sports-Button');
 const sortByButton = document.querySelector('.sort-dropdown');//Not sure...
 
 const form = document.querySelector('.input-form');//it contains all the input
 
 const titleInput = document.querySelector('.title-input');//all inputs should have names
 const urlInput = document.querySelector('.url-input');
-const authorInput = document.querySelector('.author-input');
 const summaryInput = document.querySelector('.summary-input');
-const tagInput = document.querySelector('.tag-dropdown');//Not sure...
+const tagInput = document.querySelector('.tag-dropdown');
 
 const remindMessage = document.querySelector('.warn-message');
 
 const showList = document.querySelector('.show-list');
 
-const urlList = [];
-
-
 //添加的部分 
-let LinksMap = {};  //存储的数据
-
-
-const hashList = [];//used to record formObjects' id;
+let LinksMap = {};  
+let LinksToDisplay = [];
 
 let warnMessage;
 
-const str = '<div id=001><span><button class="vote-button"></button></span>'+
+const str = '<span><button class="vote-button"></button></span>'+
 			'<span><font class="vote-count">99 </font></span>'+
 			'<span ><button class="edit-button"></button></span>'+
 			'<span ><button class="delete-button"></button></span>'+
 			'<span ><button class="save-button"></button></span>'+
-			'<span ><button class="cancel-button"></button></span></div>';
+			'<span ><button class="cancel-button"></button></span>';
 
 /*******************Utilities Functions*******************/
 
@@ -47,32 +41,6 @@ function resetInput(){
 	for( let i = 0; i < form.elements.length - 2; i++ ){ //-2 means minus two buttons
 		form.elements[i].value = '';
 	}
-}
-
-function hash(){
-	return ( Math.random() * Math.random() * Math.random() ).toString();
-}
-
-function getObjectId(obj){
-	let id = '';
-    Object.entries(obj).forEach(([key, value]) => {
-    	if ( key === 'id' ) id = value;
-    });
-    return id;
-}
-
-function transFormToObject(){ 
-	let formObject = {};
-	for ( let i = 0; i < form.elements.length - 2; i++ ){
-	formObject[form.elements[i].name] = form.elements[i].value;		
-	}
-	let key = hase();
-	while ( hashList.includes(key) ){
-		key = hash();
-	}
-	hashList.push(key);
-	formObject.id = key;
-	return formObject;
 }
 
 function transUrlToInput(obj){
@@ -94,44 +62,34 @@ function transInputToObject(arr){
 	return obj;
 }
 
-function sortByAuthor(){
-//博群，这块加sort算法，filter算法可以加在这个区域
-}
-
 function vote(){
 //斌哥，这块加vote算法
 }
 
 /*******************Make List Functions*******************/
-//make whole list 博群，这块是showlist的部分,看后面fetch和click button的时候怎么链接
-function addToList(obj) {
-	const id = getObjectId(obj);
-	let str = transUrlToInput(obj)；
-	transUrlToInput(obj)
-	let item = { obj: obj, id: id, str: str };
-	urlList.push(item);
-	renderList();
+//make whole list 
+
+function render(){
+	addToList();
 }
 
-function generateList(){
-	const list = urlList.map( element => `<li>${element.str}${str}</li><h4 class='edit-reminder'></h4>` ).join('\n');
+function addToList() {
+	let urlList = [];
+	for( element in LinksToDisplay ){
+		let str = transUrlToInput(element);
+		let item = { obj: obj, str: str };
+		urlList.push(item);
+	}
+	renderList(urlList);
+}
+
+function generateList(urlList){
+	const list = urlList.map( element => `<li id=${element.obj.id} >${element.str}${str}</li><h4 class='edit-reminder'></h4>` ).join('\n');
 	return list;
 }
 
-function renderList(){
-	showList.innerHTML = generateList();
-}
-
-function removeFromList(arr, obj){
-	for( let i = 0; i < arr.length; i++ ){
-		if( arr[i].id === obj.id ) arr.splice(i, 1);
-	}
-}
-
-function addToHashList(obj){
-	Object.entries(obj).forEach(([ key,value ]) => {
-		if( key === 'id' ) hashList.push(value);
-	});
+function renderList(urlList){
+	showList.innerHTML = generateList(urlList);
 }
 
 /*******************Input Validation Function*******************/
@@ -149,16 +107,6 @@ function checkTitleInput(titleInput) {
 function checkUrlInput(urlInput){
 	if( urlInput.value.length <= 0 ){
 		warnMessage = 'Please input a url!';
-		return false;
-	}else{
-		warnMessage = '';
-		return true;
-	}
-}
-
-function checkAuthorInput(authorInput){
-	if( authorInput.value.length <= 0 ){
-		warnMessage = 'Please input the author!';
 		return false;
 	}else{
 		warnMessage = '';
@@ -210,10 +158,9 @@ function checkValidInput(){
 	if(
 		!checkTitleInput(titleInput) || 
 		!checkUrlInput(urlInput) || 
-		!checkSummaryInput(summaryInput)
-		!checkTagInput(tagInput)||
-		!checkAuthorInput(authorInput)
-		){
+		!checkSummaryInput(summaryInput) ||
+		!checkTagInput(tagInput)
+	){
 		return false;
 	}
 	warnMessage = '';
@@ -228,8 +175,6 @@ function checkEditInput(e){
 		e.addEventListener( 'blur',renderEditTitleMessage );
 	}else if ( key === 'url' ){
 		e.addEventListener( 'blur',renderEditUrlMessage );
-	}else if ( key === 'author' ){
-		e.addEventListener( 'blur',renderEditAuthorMessage) ;
 	}else if ( key === 'tag' ){
 		e.addEventListener( 'blur',renderEditTageMessage );
 	}else if ( key === 'summery' ){
@@ -246,11 +191,6 @@ function renderTitleMessage(){
 
 function renderUrlMessage(){
 	checkUrlInput(urlInput);
-	remindMessage.innerHTML = warnMessage;
-}
-
-function renderAuthorMessage(){
-	checkAuthorInput(authorInput);
 	remindMessage.innerHTML = warnMessage;
 }
 
@@ -276,11 +216,6 @@ function renderEditUrlMessage(){
 	this.parentNode.nextSibling.innerHTML = warnMessage;
 }
 
-function renderEditAuthorMessage(){
-	checkAuthorInput(this);
-	this.parentNode.nextSibling.innerHTML = warnMessage;
-}
-
 function renderEditTageMessage(){
 	checkTagInput(this);
 	this.parentNode.nextSibling.innerHTML = warnMessage;
@@ -295,16 +230,14 @@ function renderEditSummaryMessage(){
 function clickSubmitFunc(event){
 	event.preventDefault();
 	if(checkValidInput()){
-		const obj = transFormToObject();
-		//博群，这块显示总List
+		performAddPostRequest(titleinput.value,urlInput.value,tagInput.value,summaryInput.value);
 	}else{
 		remindMessage.innerHTML = warnMessage;
 	}
 }
 
 function clickDeleteFunc(){
-	performDeletePostRequest();
-//博群，此处显示删掉条目后更新之后的List
+	performDeletePostRequest(LinksMap[parent.id]);
 }
 
 function clickCancelFunc(){
@@ -326,8 +259,7 @@ function clickSaveFunc(){
     child.forEach( e => {
     	e.getAttribute( 'disabled','disabled' );
     } )
-	performEditPostRequest();
-	//博群，此处把update过的List显示出来
+	performEditPostRequest(LinksMap[parent.id]);
 	toggleVisible(this, 0);
 }
 
@@ -339,6 +271,50 @@ function clickEditFunc(){
 	} );
 	child[0].focus();
 	toggleVisible(this, -1);
+}
+
+function clickEducation(){
+	filter(education);
+	render();
+}
+
+function clickEntertainment(){
+	filter(entertainment);
+	render();
+}
+
+function clickFinance(){
+	filter(finance);
+	render();
+}
+
+function clickPolitics(){
+	filter(politics);
+	Render();
+}
+
+function clickSports(){
+	filter(sports);
+	Render();
+}
+
+function clickAll(){
+	LinksToDisplay = [];
+	for(let key in LinksMap){
+		LinksToDisplay.push(LinksMap[key]);
+	}
+	render();
+}
+
+function clickSort(){
+	if(sortByButton.value === vote){
+		sortByVote();
+		render();
+	}
+	if(sortByButton.value === title){
+		sortByTitle();
+		render();
+	}
 }
 
 function toggleVisible(node, cur) {//实际需要根据效果更改
@@ -371,6 +347,13 @@ function toggleComplete(event){
 function addClickListener(){
 	submitButton.addEventListener('click',clickSubmitFunc);
 	resetButton.addEventListener('click',resetWarn);
+	educationButton.addEventListener('click',clickEducation);
+	entertainmentButton.addEventListener('click',clickEntertainment);
+	financeButton.addEventListener('click',clickFinance);
+	politicsButton.addEventListener('click',clickPolitics);
+	sportsButton.addEventListener('click',clickSports);
+	allButton.addEventListener('click',clickSports);
+	sortByButton.addEventListener( 'click',clickSort ); 
 	Array.from(document.getElementsByClassName('show-list')).forEach(element =>
     element.addEventListener('click', toggleComplete)
   );
@@ -379,7 +362,6 @@ function addClickListener(){
 function addInputListener(){
 	titleInput.addEventListener('blur',renderTitleMessage);
 	urlInput.addEventListener('blur',renderUrlMessage);
-	authorInput.addEventListener('blur',renderAuthorMessage);
 	summaryInput.addEventListener('blur',renderSummaryMessage);
 	tagInput.addEventListener('blur',renderTagMessage);
 }
@@ -389,7 +371,7 @@ function addSmallButtonListener(){
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
 	Array.from(document.getElementsByClassName('vote-button')).forEach(
-		element => element.addEventListener('click',////斌哥，这块加vote的算法)
+		element => element.addEventListener('click',)////斌哥，这块加vote的算法)
 		);
 		Array.from(document.getElementsByClassName('save-button')).forEach(
 		element => element.addEventListener('click',clickSaveFunc)
@@ -401,6 +383,7 @@ function addSmallButtonListener(){
 		element => element.addEventListener('click',clickEditFunc)
 		);
 }
+
 /********************Refresh Functions*************************/
 const callGetDataRequest = (() => {
 	return fetch('/data')
@@ -418,16 +401,13 @@ const callGetDataRequest = (() => {
 	});
 });
 
-//初次加载页面，页面刷新发送请求
 const performGetDataRequest = (() => {
 
 	callGetDataRequest()
 	.then( fromJson => {
-	   // console.log(fromJson);
-		LinksArr = [];
 		LinksMap = fromJson;
 		for(let key in LinksMap){
-			LinksArr.push(LinksMap[key].url);
+		 	LinksToDisplay.push(LinksMap[key]);
 		}
 		render();
 	})
@@ -436,6 +416,7 @@ const performGetDataRequest = (() => {
 	   // updateMessage(element, makeError(error));
 	});
 });
+
 /********************Delete Functions*************************/
 const callDeletePostRequest = ( (Link) => {
 	console.log("delete request  "+Link);
@@ -453,15 +434,21 @@ const callDeletePostRequest = ( (Link) => {
 		return Promise.reject('error-response-josn-bad');
 	}); 
 });
-const performDeletePostRequest = ( () => {
+
+const performDeletePostRequest = ( (link) => {
 	callDeletePostRequest(LinksMap[0])
 	.then(() => {
 		deleteLoalData(Link);
+		render();
 	})
 	.catch( error => {
 	 //   updateMessage(element, makeError(error));
 	});
 });
+
+function deleteLoalData(Link){
+	delete LinksMap[Link.id];
+}
 
 /********************Edit Functions*************************/
 const callEditPostRequest = ( (Link) => {
@@ -484,16 +471,26 @@ const callEditPostRequest = ( (Link) => {
 const performEditPostRequest = ({Link}) => {
 	callEditPostRequest(Link)
 	.then(() => {
-	//    editLoalData(Link);
+		editLoalData(Link);
+		render();
 	})
 	.catch( error => {
 	 //   updateMessage(makeError(error));
 	});
 };
 
+function editLoalData(Link){
+	LinksMap[Link.id] = Link;
+}
+
 /******************** Add Functions *************************/
-const callAddPostRequest = ( (Link) => {
-	return fetch('/add',{method: 'POST', body: JSON.stringify(Link)})
+const callAddPostRequest = ( ({titleValue, urlValue, tagValue, summaryValue}) => {
+	return fetch('/add',{method: 'POST', body: JSON.stringify({
+		title : titleValue,
+		url : urlValue,
+		tag : tagValue,
+		summary : summaryValue
+	})})
 	.then(response => {
 		if(!response.ok){
 			return Promise.reject("error-response-not-okay");
@@ -512,12 +509,44 @@ const callAddPostRequest = ( (Link) => {
 const performAddPostRequest = ({Link}) => {
 	callAddPostRequest(Link)
 	.then(() => {
-   //     addLoalData(Link);
+		addLoalData(Link);
+		render();
 	})
 	.catch( error => {
    //     updateMessage(makeError(error));
 	});
 };
+
+function addLoalData(Link){
+	LinksMap[Link.id] = Link;
+}
+
+
+/********************Filter function*************************/
+function filter(field){
+	LinksToDisplay = [];
+	for(let key in LinksMap){
+		if(LinksMap[key].tag.includes(field)){
+			LinksToDisplay.push(LinksMap[key]);
+		}
+	}
+	render();
+}
+/********************Sort funtion*************************/
+//vote
+function sortByVote(){
+	LinksToDisplay.sort((a,b) => {
+		return a.vote - b.vote;
+	});
+	render();
+}
+
+function sortByTitle(){
+	LinksToDisplay.sort((a,b) => {
+		return a.title - b.title;
+	});
+	render();
+}
 
 /********************Init funtion*************************/
 function init(){
