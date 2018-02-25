@@ -1,12 +1,87 @@
 <!DOCTYPE html>
 <html>
-  <body>
-        <div class = 'input'>Hello!!! I need to be changed</div>
 
-      <button class = 'add'>Add </button>
-      <button class = 'edit'> Edit</button>
-      <button class="delete">Delete</button>
-      <div class = 'output'> this is the return from url</div>
-  </body>
-  <script src = "fetch.js"></script>
+<head>
+    
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="header-container">
+            <!-- Username Display -->
+            <div id="userName" class="user-name">User Name</div>
+            <div class="header">
+                <h2>SurfVibes</h2>
+            </div>
+
+            <div class="warn-message">
+
+            </div>
+            <!-- Add URL -->
+            <form class="input-form">
+                <label class="title-input">Title</label>
+                <input class="title-input" type="text">
+                <label class="url-input">URL</label>
+                <input class="url-input" type="url">
+                <label class="author-input">Author</label>
+                <input class="author-input" type="author">
+                <label class="tag-dropdown">Field</label>
+                <select name="show-list">
+                    <option id="education" value="education">Education</option>
+                    <option id="entertainment" value="entertainment">Entertainment</option>
+                    <option id="finance" value="finance">Finance</option>
+                    <option id="politics" value="politics">Politics</option>
+                    <option id="sports" value="sports">Sports</option>
+                </select>
+                <label class="summary-input">Summary</label>
+                <textarea class="summary-input" type="text"></textarea>
+                <div id="addBtn">
+                    <button class="submit-button" type="submit">Submit</button>
+                    <button class="reset-button" type="reset">Reset</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <!-- Sort By -->
+    <div class="sort-dropdown">
+        <label class="nav-main-sort">Sort By </label>
+        <select name="sort-by" id="sortyBy">
+            <option id="title" value="title">Title</option>
+            <option id="author" value="author">Author</option>
+            <option id="date" value="date">Date</option>
+            <option id="voteNumber" value="number-of-vote">Popularity</option>
+        </select>
+    </div>
+
+    <!-- Top Tags -->
+    <div class="main-container">
+        <div class="topnav">
+            <button class="educaiton-Button">Education</button>
+            <button class="entertainment-Button">Entertainment</button>
+            <button class="finance-Button">Finance</button>
+            <button class="politics-Button">Politics</button>
+            <button class="sports-Button">Sports</button>
+        </div>
+        <!-- Content area -->
+        <div class="url-container">
+            <div class="display-container">
+                <div class="url-tag-header">
+                    <h4>Number</h4>
+                    <h4>Title</h4>
+                    <h4>Author</h4>
+                    <h4>Date</h4>
+                    <h4>Field</h4>
+                </div>
+                <ul class="url-content">
+                </ul>
+                <div class="function-buttons">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="cerulean.js"></script>
+</body>
+
 </html>

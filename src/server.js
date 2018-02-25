@@ -11,7 +11,7 @@ const linkPool = ["https://muratbuffalo.blogspot.com/2018/02/paper-review-ipfs-c
 let titlePool = ["Paper review. IPFS: Content addressed, versioned, P2P file system",
 "I've Just Launched \"Pwned Passwords\" V2 With Half a Billion Passwords for Download",
 "The Great Puri.sm Outage of 2018","Why Self-Taught Artificial Intelligence Has Trouble With the Real World"];
-let uuid = 0;
+let uuid = 13;
 let LinksMap = initLinks();
 
 
@@ -80,8 +80,9 @@ app.post('/edit',(req, resp) => {
 
 app.post('/delete',(req, resp) => {
     const id = req.body.id;
+    let Link = LinksMap[id];
     delete LinksMap[id];
-    resp.send('OK');
+    resp.send(JSON.stringify(Link));
 });
 
 app.post('/vote', (req, resp) => {
