@@ -3,10 +3,12 @@
 const submitButton = document.querySelector('.submit-button');
 const resetButton = document.querySelector('.reset-button');
 
-//tag buttons: more than one
 const all-Button = document.querySelector('.all-Button');
-const tag1-Button = document.querySelector('.tag1-Button');
-const tag2-Button = document.querySelector('.tag1-Button');
+const education-Button = document.querySelector('.education-Button');
+const entertainment-Button = document.querySelector('.entertainment-Button');
+const finance-Button = document.querySelector('.finance-Button');
+const politics-Button = document.querySelector('.politics-Button');
+const sports-Button = document.querySelector('.sports-Button');
 const sortByButton = document.querySelector('.sort-dropdown');//Not sure...
 
 const form = document.querySelector('.input-form');//it contains all the input
@@ -14,7 +16,7 @@ const form = document.querySelector('.input-form');//it contains all the input
 const titleInput = document.querySelector('.title-input');//all inputs should have names
 const urlInput = document.querySelector('.url-input');
 const authorInput = document.querySelector('.author-input');
-const summeryInput = document.querySelector('.summery-input');
+const summaryInput = document.querySelector('.summary-input');
 const tagInput = document.querySelector('.tag-dropdown');//Not sure...
 
 const remindMessage = document.querySelector('.warn-message');
@@ -22,19 +24,22 @@ const remindMessage = document.querySelector('.warn-message');
 const showList = document.querySelector('.show-list');
 
 const urlList = [];
-const tag1List = [];
-const tag2List = [];
+
+
+//添加的部分 
+let LinksMap = {};  //存储的数据
+
 
 const hashList = [];//used to record formObjects' id;
 
 let warnMessage;
 
-const str = '<span class="show-vote"><button class="vote-button"></button></span>'+
+const str = '<div id=001><span><button class="vote-button"></button></span>'+
 			'<span><font class="vote-count">99 </font></span>'+
-			'<span class="show-edit"><button class="edit-button"></button></span>'+
-			'<span class="show-delete"><button class="delete-button"></button></span>'+
-			'<span class="hide-check"><button class="check-button"></button></span>'+
-			'<span class="hide-cancel"><button class="cancel-button"></button></span>';
+			'<span ><button class="edit-button"></button></span>'+
+			'<span ><button class="delete-button"></button></span>'+
+			'<span ><button class="save-button"></button></span>'+
+			'<span ><button class="cancel-button"></button></span></div>';
 
 /*******************Utilities Functions*******************/
 
@@ -46,6 +51,14 @@ function resetInput(){
 
 function hash(){
 	return ( Math.random() * Math.random() * Math.random() ).toString();
+}
+
+function getObjectId(obj){
+	let id = '';
+    Object.entries(obj).forEach(([key, value]) => {
+    	if ( key === 'id' ) id = value;
+    });
+    return id;
 }
 
 function transFormToObject(){ 
@@ -62,23 +75,11 @@ function transFormToObject(){
 	return formObject;
 }
 
-function getObjectId(obj){
-	let id = '';
-    Object.entries(obj).forEach(([key, value]) => {
-    	if ( key === 'id' ) id = value;
-    });
-    return id;
-}
-
-function sortByAuthor(list){
-
-}
-
 function transUrlToInput(obj){
 	let str = '';
 	let type = 'text';
 	Object.entries(obj).forEach(([key,value]) => {
-		str += `<input type=${type} name=${key} value='${value}'>`;
+		str += `<input type=${type} name=${key} value=${value} disabled='disabled'>`;
 	});
 	return str;
 } 
@@ -93,13 +94,20 @@ function transInputToObject(arr){
 	return obj;
 }
 
+function sortByAuthor(){
+//博群，这块加sort算法，filter算法可以加在这个区域
+}
 
+function vote(){
+//斌哥，这块加vote算法
+}
 
 /*******************Make List Functions*******************/
-//make whole list
+//make whole list 博群，这块是showlist的部分,看后面fetch和click button的时候怎么链接
 function addToList(obj) {
 	const id = getObjectId(obj);
-	let str = makeListStr(obj);
+	let str = transUrlToInput(obj)；
+	transUrlToInput(obj)
 	let item = { obj: obj, id: id, str: str };
 	urlList.push(item);
 	renderList();
@@ -108,16 +116,6 @@ function addToList(obj) {
 function generateList(){
 	const list = urlList.map( element => `<li>${element.str}${str}</li><h4 class='edit-reminder'></h4>` ).join('\n');
 	return list;
-}
-
-function makeListStr(obj){
-	let str = '';
-	Object.entries(obj).forEach(([key.value]) => {
-		if( key === 'dontknowyet' ){
-			str += value;
-		}
-	});
-	return str;
 }
 
 function renderList(){
@@ -134,49 +132,6 @@ function addToHashList(obj){
 	Object.entries(obj).forEach(([ key,value ]) => {
 		if( key === 'id' ) hashList.push(value);
 	});
-}
-
-//make different tag lists
-
-function addToTag1List(obj) {
-	const id = getObjectId(obj);
-	let str = makeListStr(obj);
-	let item = { id: id, str: str };
-	if(obj.tag === 'tag1'){
-		tag1List.push(item);
-	}
-}
-
-function addToTag2List(obj) {
-	const id = getObjectId(obj);
-	let str = makeListStr(obj);
-	let item = { id: id, str: str };
-	if(obj.tag === 'tag2'){
-		tag2List.push(item);
-	}
-}
-
-function addToSublist(obj){
-	addToTag1List(obj);
-	addToTag2List(obj);
-}
-
-function generateTag1List(){
-	const list = tag1List.map( element => `<li>${element.str}${str}</li><h4 class='edit-field'></h4>` ).join('\n');
-	return list;
-}
-
-function generateTag2List(){
-	const list = tag2List.map( element => `<li>${element.str}${str}</li><h4 class='edit-field'></h4>` ).join('\n');
-	return list;
-}
-
-function renderTag1List(){
-	showList.innerHTML = generateTag1List();
-}
-
-function renderTag2List(){
-	showList.innerHTML = generateTag2List();
 }
 
 /*******************Input Validation Function*******************/
@@ -211,8 +166,8 @@ function checkAuthorInput(authorInput){
 	}
 }
 
-function checkSummeryInput(){
-	if( summeryInput.value.length <= 0 ){
+function checkSummaryInput(){
+	if( summaryInput.value.length <= 0 ){
 		warnMessage = 'Please input the summery!';
 		return false;
 	}else{
@@ -255,7 +210,7 @@ function checkValidInput(){
 	if(
 		!checkTitleInput(titleInput) || 
 		!checkUrlInput(urlInput) || 
-		!checkSummeryInput(summeryInput)
+		!checkSummaryInput(summaryInput)
 		!checkTagInput(tagInput)||
 		!checkAuthorInput(authorInput)
 		){
@@ -305,7 +260,7 @@ function renderTagMessage(){
 }
 
 function renderSummeryMessage(){
-	checkSummeryInput(summeryInput);
+	checkSummaryInput(summaryInput);
 	remindMessage.innerHTML = warnMessage;
 }
 
@@ -331,102 +286,101 @@ function renderEditTageMessage(){
 	this.parentNode.nextSibling.innerHTML = warnMessage;
 }
 
-function renderEditSummeryMessage(){
-	checkSummeryInput(this);
+function renderEditSummaryMessage(){
+	checkSummaryInput(this);
 	this.parentNode.nextSibling.innerHTML = warnMessage;
 }
 
-/********************Fetch Functions*************************/
-function createUrlListItem(obj){
-	fetch('/add',{
-		method: 'POST',
-		body: JSON.stringify({
-			obj
-		}),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	})
-		.then(function(req)){
-			if(!req.ok){
-				throw Error(req.status);
-			}
-			addToList(obj);
-			addToSublist(obj);
-			resetInput();
-		})
-		.catch(function(err){
-			console.log(err + 'this is error');
-		});
-}
-
-function updateWorkListItem(obj){
-	fetch('/edit',{
-		method: 'PUT',
-		body: JSON.stringity({
-			obj
-		}),
-		headers:{
-			'Content-Type': 'application/json'
-		}
-	})
-		.then(function(req){
-			if(!req.ok){
-				throw Error(req.status);
-			}
-			addToList(obj);
-		})
-		.catch(function(err) {
-      		console.log(err + 'this is error');
-    	});
-}
-
-function deleteWorkListItem(obj){
-
-}
-
-function getWorkList(){
-
-}
-
 /********************Listener Functions*************************/
-function clickCreateFunc(event){
+function clickSubmitFunc(event){
 	event.preventDefault();
 	if(checkValidInput()){
 		const obj = transFormToObject();
-		createUrlListItem();
+		//博群，这块显示总List
 	}else{
 		remindMessage.innerHTML = warnMessage;
 	}
 }
 
 function clickDeleteFunc(){
-
+	performDeletePostRequest();
+//博群，此处显示删掉条目后更新之后的List
 }
 
 function clickCancelFunc(){
-
+	const parent = this.parentNode;
+	const grandParent = parent.parentNode;
+	const child = parent.childNodes;
+	let i = 0;
+	child.forEach(e => {
+		e.setAttribute('disabled','disabled');
+	});
+	this.parentNode.nextSibling.innerHTML = '';
+	toggleVisible(this, 1);
 }
 
-function clickCheckFunc(){
-
+function clickSaveFunc(){
+	const parent = this.parentNode;
+    const ulParent = parent.parentNode;
+    const child = parent.childNodes;
+    child.forEach( e => {
+    	e.getAttribute( 'disabled','disabled' );
+    } )
+	performEditPostRequest();
+	//博群，此处把update过的List显示出来
+	toggleVisible(this, 0);
 }
 
 function clickEditFunc(){
+	const child = this.parentNode.childNodes;
+	child.forEach( e => {
+		checkEditInput(e);
+		e.removeAttribute('disabled');
+	} );
+	child[0].focus();
+	toggleVisible(this, -1);
+}
 
+function toggleVisible(node, cur) {//实际需要根据效果更改
+  node.parentNode.classList.remove('mark-list');
+  node.style.display = 'none';
+  
+  if( cur === -1 ){
+  	node.nextSibling.style.display = 'none';
+  	node.nextSibling.nextSibling.style.display = 'inline';
+  	node.nextSibling.nextSibling.nextSibling.style.display = 'inline';
+  }else if ( cur === 0 ){
+  	node.nextSibling.style.display = 'none';
+  	node.previousSibling.style.display = 'inline'
+  	node.previousSibling.previousSibling.style.display = 'inline';
+  } else{
+  	node.previousSibling.style.display = 'none';
+  	node.previousSibling.previousSibling.style.display = 'inline';
+  	node.previousSibling.previousSibling.previousSibling.style.display = 'inline';
+  }
+
+}
+
+function toggleComplete(event){
+	if ( event.target.getAttribute('disabled') === 'disabled' ){
+		event.target.parentNode.classList.toggle('mark-list');
+	}
 }
 
 /********************Add Listener Functions*************************/
 function addClickListener(){
-	submitButton.addEventListener('click',clickCreateFunc);
+	submitButton.addEventListener('click',clickSubmitFunc);
 	resetButton.addEventListener('click',resetWarn);
+	Array.from(document.getElementsByClassName('show-list')).forEach(element =>
+    element.addEventListener('click', toggleComplete)
+  );
 }
 
 function addInputListener(){
 	titleInput.addEventListener('blur',renderTitleMessage);
 	urlInput.addEventListener('blur',renderUrlMessage);
 	authorInput.addEventListener('blur',renderAuthorMessage);
-	summeryInput.addEventListener('blur',renderSummeryMessage);
+	summaryInput.addEventListener('blur',renderSummaryMessage);
 	tagInput.addEventListener('blur',renderTagMessage);
 }
 
@@ -434,5 +388,148 @@ function addSmallButtonListener(){
 	Array.from(document.getElementsByClassName('delete-button')).forEach(
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
+	Array.from(document.getElementsByClassName('vote-button')).forEach(
+		element => element.addEventListener('click',////斌哥，这块加vote的算法)
+		);
+		Array.from(document.getElementsByClassName('save-button')).forEach(
+		element => element.addEventListener('click',clickSaveFunc)
+		);
+		Array.from(document.getElementsByClassName('cancel-button')).forEach(
+		element => element.addEventListener('click',clickCancelFunc)
+		);
+		Array.from(document.getElementsByClassName('edit-button')).forEach(
+		element => element.addEventListener('click',clickEditFunc)
+		);
 }
 /********************Refresh Functions*************************/
+const callGetDataRequest = (() => {
+	return fetch('/data')
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
+	.catch( (error) => {
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
+	});
+});
+
+//初次加载页面，页面刷新发送请求
+const performGetDataRequest = (() => {
+
+	callGetDataRequest()
+	.then( fromJson => {
+	   // console.log(fromJson);
+		LinksArr = [];
+		LinksMap = fromJson;
+		for(let key in LinksMap){
+			LinksArr.push(LinksMap[key].url);
+		}
+		render();
+	})
+	.catch( error => {
+		console.log(error);
+	   // updateMessage(element, makeError(error));
+	});
+});
+/********************Delete Functions*************************/
+const callDeletePostRequest = ( (Link) => {
+	console.log("delete request  "+Link);
+	return fetch('/delete',{method: 'POST', body: JSON.stringify(Link) })
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
+	.catch( (error) => {
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
+	}); 
+});
+const performDeletePostRequest = ( () => {
+	callDeletePostRequest(LinksMap[0])
+	.then(() => {
+		deleteLoalData(Link);
+	})
+	.catch( error => {
+	 //   updateMessage(element, makeError(error));
+	});
+});
+
+/********************Edit Functions*************************/
+const callEditPostRequest = ( (Link) => {
+	return fetch('/edit',{method: 'POST', body: JSON.stringify(Link)})
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
+	.catch( (error) => {
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
+	}); 
+});  
+
+// 发送edit请求
+const performEditPostRequest = ({Link}) => {
+	callEditPostRequest(Link)
+	.then(() => {
+	//    editLoalData(Link);
+	})
+	.catch( error => {
+	 //   updateMessage(makeError(error));
+	});
+};
+
+/******************** Add Functions *************************/
+const callAddPostRequest = ( (Link) => {
+	return fetch('/add',{method: 'POST', body: JSON.stringify(Link)})
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
+	.catch( (error) => {
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
+	}); 
+}); 
+
+//发送添加请求
+const performAddPostRequest = ({Link}) => {
+	callAddPostRequest(Link)
+	.then(() => {
+   //     addLoalData(Link);
+	})
+	.catch( error => {
+   //     updateMessage(makeError(error));
+	});
+};
+
+/********************Init funtion*************************/
+function init(){
+	performGetDataRequest();
+	addListener();
+}
+
+function addListener(){
+	addClickListener();
+	addInputListener();
+	addSmallButtonListener();
+}
+
+
+init();
