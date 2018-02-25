@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Cabin|Caveat|Exo|Exo+2|Francois+One|Gloria+Hallelujah|Kalam|Kavivanar|Lobster|Nanum+Pen+Script|Neucha|PT+Sans+Caption|Permanent+Marker|Rock+Salt');
+
+body {
+    background-image:url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2006997188,3564550087&fm=27&gp=0.jpg"); 
+    background-size: 100%; 
+}
+.header {
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Papyrus', fantasy;
+    font-style: italic;
+    font:bold;
+}
+
+.warn-message {
+    text-align: center;
+    font-style: italic;
+    font: bold;
+    font-size: 20px;
+    color: firebrick;
+
+}
+/* Username Display */
+#userName {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  margin: 4em auto;
+  width: 100px; 
+  height: 30px; 
+  line-height: 30px;
+  background:yellow;
+  color: black;
+  font-weight: 700;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+  border: 1px solid white;
+  position: absolute;
+  top: 0; 
+  left: 20px; 
+  border-radius: 50%;
+
+}
+/* Style the sort by dropdown menu */
+.nav-main-sort {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+    font: bold;
+}
+/* Style the top navigation bar */
+.topnav {
+    overflow: hidden;
+    flex: 1;
+    padding: 20px;
+
+}
+
+/* Style the topnav links */
+.topnav button {
+    display: inline-block;
+    color:black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color:#ffb3b3;
+    flex: 1;
+
+}
+
+/* Change color on hover */
+.topnav button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+#url-tag-header {
+    width: 300px;
+    height: 300px;
+    border: 1px solid black;
+    flex: 1;
+    
+}
+#url-tag-header div {
+    display: inline-block;
+    flex: 1;
+} 
+
+.input-form {
+    position: absolute;
+    top: 10px; 
+    right: 20px;
+    display: inline-block;
+}
+
+.input-form label {
+    display: block;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
+}
+
+.url-tag-header {
+  display: flex;
+  justify-content: center;
+  margin: 1% auto;
+  padding: 0%;
+  box-sizing: border-box;
+}
+h4 {
+    display: block;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+.url-tag-header > h4 {
+    font-family: fantasy;
+    text-align: center;
+    font-size: 1.1rem;
+    color: black;
+    margin: 0 80px;
+}
+/*  */
+.url-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    margin: 1% auto;
+}
+.url-content > li {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+    padding: 20px;
+}
+
+li > input {
+    font-family: 'Courier New', Courier, monospace;
+}
+li > input:disabled {
+    color: salmon;
+}
+
+.function-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.function-button:hover {
+    color: gold;
+}
+
+.vote-button {
+    display: inline;
+    background-color: #f44336;
+    border-radius: 2px;
+
+
+}
+.edit-button {
+    display: inline;
+    background-color: #f44336;
+    border-radius: 2px;
+}
+
+.delete-button {
+    display: inline;
+    background-color: #f44336;
+    border-radius: 2px;
+
+}
+.save-button {
+    display: inline;
+    background-color: #f44336;
+    border-radius: 2px;
+
+}
+.cancel-button {
+    display: inline;
+    background-color: #f44336;
+    border-radius: 2px;
+}
+
