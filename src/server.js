@@ -53,7 +53,7 @@ function initLinks(){
     return Links;
 }
 
-app.use( express.static('/') ); // serve any assets by their path under '/' directory (same dir as server.js)
+app.use( express.static('.') ); // serve any assets by their path under '/' directory (same dir as server.js)
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
 
 
