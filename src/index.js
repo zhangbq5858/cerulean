@@ -47,10 +47,9 @@ function transUrlToInput(obj){
 	let str = '';
 	let type = 'text';
 	for(key in obj){
-		if(key === "id") continue;
+		if(key === "id"){
+			 continue;
 		//console.log(key);
-		if(key === "url"){
-			str += `<a href=${obj[key]}>${obj[key]}</a>`;
 		}else{
 			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
 		}
@@ -266,7 +265,7 @@ function clickCancelFunc(){
 	const grandParent = parent.parentNode;
 	const child = parent.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if(i ===2) continue;
 		let e = child[i];
 		e.setAttribute('disabled','disabled');
 	}
@@ -278,7 +277,7 @@ function clickSaveFunc(){
 	const parent = this.parentNode;
     const child = parent.childNodes;
 		for(let i = 0; i  < 4; i++){
-			if(i === 1 || i ===2) continue;
+			if(i ===2) continue;
 			let e = child[i];
 			e.setAttribute('disabled','disabled');
 		}
@@ -293,7 +292,7 @@ function clickSaveFunc(){
 function clickEditFunc(){
 	const child = this.parentNode.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if( i ===2) continue;
 		let e = child[i];
 		checkEditInput(e);
 		e.removeAttribute('disabled');
