@@ -4,12 +4,12 @@ const submitButton = document.querySelector('.submit-button');
 const resetButton = document.querySelector('.reset-button');
 
 const allButton = document.querySelector('.all-Button');
-const educationButton = document.querySelector('.educaiton-Button');
+const educationButton = document.querySelector('.education-Button');
 const entertainmentButton = document.querySelector('.entertainment-Button');
 const financeButton = document.querySelector('.finance-Button');
 const politicsButton = document.querySelector('.politics-Button');
 const sportsButton = document.querySelector('.sports-Button');
-const sortByButton = document.querySelector('.sortyBy');
+const sortByButton = document.querySelector('.sortBy');
 
 const form = document.querySelector('.input-form');//it contains all the input
 
@@ -345,7 +345,7 @@ function clickSort(){
 		sortByTitle();
 		render();
 	}
-	
+
 }
 function toggleVisible(node, cur) {//实际需要根据效果更改
 	node.parentNode.classList.remove('mark-list');
@@ -592,7 +592,7 @@ function sortByVote(){
 	 return a.vote - b.vote;
 	});
    }
-   
+
    function sortByTitle(){
 	LinksToDisplay.sort((a,b) => {
 	 return a.vote - b.vote;
@@ -612,5 +612,5 @@ function addListener(){
 	addSmallButtonListener();
 }
 
-
+render();
 init();
