@@ -4,26 +4,24 @@ const submitButton = document.querySelector('.submit-button');
 const resetButton = document.querySelector('.reset-button');
 
 const allButton = document.querySelector('.all-Button');
-const educationButton = document.querySelector('.educaiton-Button');
+const educationButton = document.querySelector('.education-Button');
 const entertainmentButton = document.querySelector('.entertainment-Button');
 const financeButton = document.querySelector('.finance-Button');
 const politicsButton = document.querySelector('.politics-Button');
 const sportsButton = document.querySelector('.sports-Button');
-const sortByButton = document.querySelector('.sortyBy');
+const sortByButton = document.querySelector('.sortBy');
 
 const form = document.querySelector('.input-form');//it contains all the input
 
 const titleInput = document.querySelector('.title-input');//all inputs should have names
 const urlInput = document.querySelector('.url-input');
 const summaryInput = document.querySelector('.summary-input');
-//const tagInput = document.querySelector('.tag-dropdown');
 const urlContent = document.querySelector('.url-content');
-
+const showList = document.querySelector('.show-list');
 const remindMessage = document.querySelector('.warn-message');
 
-const showList = document.querySelector('.show-list');
 
-//添加的部分
+
 let LinksMap = {};
 let LinksToDisplay = [];
 
@@ -47,10 +45,9 @@ function transUrlToInput(obj){
 	let str = '';
 	let type = 'text';
 	for(key in obj){
-		if(key === "id") continue;
+		if(key === "id"){
+			 continue;
 		//console.log(key);
-		if(key === "url"){
-			str += `<a href=${obj[key]}>${obj[key]}</a>`;
 		}else{
 			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
 		}
@@ -69,7 +66,7 @@ function transInputToObject(arr){
 }
 
 function vote(){
-//斌哥，这块加vote算法
+//add vote function here @Bin
 }
 
 /*******************Make List Functions*******************/
@@ -266,7 +263,7 @@ function clickCancelFunc(){
 	const grandParent = parent.parentNode;
 	const child = parent.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if(i ===2) continue;
 		let e = child[i];
 		e.setAttribute('disabled','disabled');
 	}
@@ -278,7 +275,7 @@ function clickSaveFunc(){
 	const parent = this.parentNode;
     const child = parent.childNodes;
 		for(let i = 0; i  < 4; i++){
-			if(i === 1 || i ===2) continue;
+			if(i ===2) continue;
 			let e = child[i];
 			e.setAttribute('disabled','disabled');
 		}
@@ -293,7 +290,7 @@ function clickSaveFunc(){
 function clickEditFunc(){
 	const child = this.parentNode.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if( i ===2) continue;
 		let e = child[i];
 		checkEditInput(e);
 		e.removeAttribute('disabled');
@@ -345,9 +342,9 @@ function clickSort(){
 		sortByTitle();
 		render();
 	}
-	
+
 }
-function toggleVisible(node, cur) {//实际需要根据效果更改
+function toggleVisible(node, cur) {
 	node.parentNode.classList.remove('mark-list');
 	node.style.display = 'none';
 
@@ -400,7 +397,7 @@ function addSmallButtonListener(){
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
 	Array.from(document.getElementsByClassName('vote-button')).forEach(
-		element => element.addEventListener('click',clickDeleteFunc)////斌哥，这块加vote的算法)
+		element => element.addEventListener('click',clickDeleteFunc)//vote function @Bin)
 		);
 		Array.from(document.getElementsByClassName('save-button')).forEach(
 		element => element.addEventListener('click',clickSaveFunc)
@@ -592,7 +589,7 @@ function sortByVote(){
 	 return a.vote - b.vote;
 	});
    }
-   
+
    function sortByTitle(){
 	LinksToDisplay.sort((a,b) => {
 	 return a.vote - b.vote;
@@ -612,5 +609,5 @@ function addListener(){
 	addSmallButtonListener();
 }
 
-
+render();
 init();
