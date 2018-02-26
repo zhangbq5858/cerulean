@@ -16,14 +16,10 @@ const form = document.querySelector('.input-form');//it contains all the input
 const titleInput = document.querySelector('.title-input');//all inputs should have names
 const urlInput = document.querySelector('.url-input');
 const summaryInput = document.querySelector('.summary-input');
-//const tagInput = document.querySelector('.tag-dropdown');
 const urlContent = document.querySelector('.url-content');
-
+const showList = document.querySelector('.show-list');
 const remindMessage = document.querySelector('.warn-message');
 
-const showList = document.querySelector('.show-list');
-
-//添加的部分
 let LinksMap = {};
 let LinksToDisplay = [];
 
@@ -47,10 +43,9 @@ function transUrlToInput(obj){
 	let str = '';
 	let type = 'text';
 	for(key in obj){
-		if(key === "id") continue;
+		if(key === "id"){
+			 continue;
 		//console.log(key);
-		if(key === "url"){
-			str += `<a href=${obj[key]}>${obj[key]}</a>`;
 		}else{
 			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
 		}
@@ -69,7 +64,7 @@ function transInputToObject(arr){
 }
 
 function vote(){
-//斌哥，这块加vote算法
+//vote fungcion @Bin (from @jingyi)
 }
 
 /*******************Make List Functions*******************/
@@ -96,7 +91,7 @@ function addToList() {
    }
 
 function generateList(urlList){
-	//console.log(urlList[0].url+" urlList内容");
+	//console.log(urlList[0].url+" urlList content");
 	const list = urlList.map( element => `<li id=${element.id} >${element.str}${str}</li><h4 class='edit-reminder'></h4>` ).join('\n');
 //console.log(list);
 	return list;
@@ -266,7 +261,7 @@ function clickCancelFunc(){
 	const grandParent = parent.parentNode;
 	const child = parent.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if(i ===2) continue;
 		let e = child[i];
 		e.setAttribute('disabled','disabled');
 	}
@@ -278,7 +273,7 @@ function clickSaveFunc(){
 	const parent = this.parentNode;
     const child = parent.childNodes;
 		for(let i = 0; i  < 4; i++){
-			if(i === 1 || i ===2) continue;
+			if(i ===2) continue;
 			let e = child[i];
 			e.setAttribute('disabled','disabled');
 		}
@@ -293,7 +288,7 @@ function clickSaveFunc(){
 function clickEditFunc(){
 	const child = this.parentNode.childNodes;
 	for(let i = 0; i  < 4; i++){
-		if(i === 1 || i ===2) continue;
+		if( i ===2) continue;
 		let e = child[i];
 		checkEditInput(e);
 		e.removeAttribute('disabled');
@@ -347,7 +342,7 @@ function clickSort(){
 	}
 
 }
-function toggleVisible(node, cur) {//实际需要根据效果更改
+function toggleVisible(node, cur) {
 	node.parentNode.classList.remove('mark-list');
 	node.style.display = 'none';
 
@@ -380,7 +375,7 @@ function addClickListener(){
 	financeButton.addEventListener('click',clickFinance);
 	politicsButton.addEventListener('click',clickPolitics);
 	sportsButton.addEventListener('click',clickSports);
-	//allButton.addEventListener('click',clickSports);
+	allButton.addEventListener('click',clickAll);
 	sortByButton.addEventListener( 'change',clickSort );
 	Array.from(document.getElementsByClassName('url-content')).forEach(element =>
     element.addEventListener('click', toggleComplete)
@@ -506,7 +501,7 @@ const callEditPostRequest = ( (Link) => {
 	});
 });
 
-// 发送edit请求
+// send edit request
 const performEditPostRequest = (Link) => {
 	callEditPostRequest(Link)
 	.then(fromJson => {
@@ -553,7 +548,7 @@ const callAddPostRequest = (titleValue, urlValue, tagValue, summaryValue) => {
 	});
 };
 
-//发送添加请求
+//send add request
 const performAddPostRequest = (titleValue, urlValue, tagValue, summaryValue) => {
 	//console.log("call add" + titleValue + urlValue + tagValue + summaryValue);
 	callAddPostRequest(titleValue, urlValue, tagValue, summaryValue)
@@ -585,7 +580,6 @@ function filter(field){
 	}
 }
 /********************Sort funtion*************************/
-//vote
 
 function sortByVote(){
 	LinksToDisplay.sort((a,b) => {
