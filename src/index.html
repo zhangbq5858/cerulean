@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+    
 </head>
 <body>
     <div class="page-container"> 
@@ -24,23 +25,28 @@
                 <label class="tag-dropdown">Field</label>
                 <select  name="show-list">
 
-                    <option id="education" value="education">Education</option>
-                    <option id="entertainment" value="entertainment">Entertainment</option>
-                    <option id="finance" value="finance">Finance</option>
-                    <option id="politics" value="politics">Politics</option>
+                    <option id="Education" value="education">Education</option>
+                    <option id="Entertainment" value="entertainment">Entertainment</option>
+                    <option id="Finance" value="finance">Finance</option>
+                    <option id="Politics" value="politics">Politics</option>
                     <option id="sports" value="sports">Sports</option>
                 </select>
                 <label class="summary-input">Summary</label>
-                    <textarea class="summary-input" type="text"></textarea>
+                <textarea class="summary-input" type="text"></textarea>
+                <div id="addBtn">
+                    <button class="submit-button" type="submit">Submit</button>
+                    <button class="reset-button" type="reset">Reset</button>
+                </div>
             </form>
         </div>
     </div>
     <!-- Sort By -->
     <div class="sort-dropdown">
         <label class="nav-main-sort">Sort By </label>
-        <select name="sort-by" id="class">
+        <select name="sort-by" class="sortBy">
+            <option value="" selected></option>
             <option id="title" value="title">Title</option>
-            <option id="voteNumber" value="number-of-vote">Popularity</option>
+            <option id="vote" value="vote">Vote</option>
         </select>
     </div>
    
@@ -54,7 +60,7 @@
             <button class="sports-Button">Sports</button>
         </div>
         <!-- Content area -->
-        <div class="url-container url-content" >
+        <div class="url-container" >
             <div class="display-container">
                 <div class="url-tag-header">
                     <h4>All</h4>
