@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Cabin|Caveat|Exo|Exo+2|Francois+One|Gloria+Hallelujah|Kalam|Kavivanar|Lobster|Nanum+Pen+Script|Neucha|PT+Sans+Caption|Permanent+Marker|Rock+Salt');
 
 body {
-    background-image:url("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2006997188,3564550087&fm=27&gp=0.jpg"); 
+    background-image:url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520192890&di=6242094b3bea840854a4d665f5734ff9&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F12%2F31%2F88%2F25i58PICtVW.jpg");
     background-size: 100%; 
 }
 .header {
@@ -65,14 +65,13 @@ body {
     font: bold;
     cursor: pointer;
     border-radius: 50%;
-    background-color:#ffb3b3;
-    flex: 1;
+    background-color:#FF69B4;
 
 }
 
 /* Change color on hover */
 .topnav button:hover {
-    background-color: #ddd;
+    background-color:#FFFACD;
     color: black;
 }
 
@@ -98,6 +97,13 @@ body {
 .input-form label {
     display: block;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
+}
+
+.submit-button {
+    cursor: pointer;
+}
+.reset-button {
+    cursor: pointer;
 }
 
 .url-tag-header {
@@ -190,5 +196,39 @@ li > input:disabled {
     display: inline;
     background-color: #f44336;
     border-radius: 2px;
+}
+
+.multiselect {
+    width: 200px;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#checkboxes label {
+    display: block;
+}
+
+#checkboxes label:hover {
+    background-color: #1e90ff;
 }
 
