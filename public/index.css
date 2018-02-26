@@ -2,6 +2,8 @@
 
 body {
     background-image: url("https://cdn.pixabay.com/photo/2018/02/07/16/06/love-3137380_1280.jpg");
+    display: block;
+    height: 100%;
 }
 .header {
     font-size: 40px;
@@ -164,66 +166,32 @@ li > input:disabled {
 
 .vote-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 
 }
 .edit-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 }
 
 .delete-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 }
 .save-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 }
 .cancel-button {
     display: inline;
-    background-color: #f44336;
+    background-color:#DB7093;
     border-radius: 2px;
-}
-
-.multiselect {
-    width: 200px;
-}
-
-.selectBox {
-    position: relative;
-}
-
-.selectBox select {
-    width: 100%;
-    font-weight: bold;
-}
-
-.overSelect {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#checkboxes {
-    display: none;
-    border: 1px #dadada solid;
-}
-
-#checkboxes label {
-    display: block;
-}
-
-#checkboxes label:hover {
-    background-color: #1e90ff;
 }
 
