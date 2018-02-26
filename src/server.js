@@ -20,9 +20,9 @@ function createLink(url, title, tag, summary){
     Link.id = uuid++;
     Link.title = title;
     Link.url = url;
-    Link.summary = summary;
+    //Link.summary = 'summary';
     Link.vote = Math.floor(Math.random()*1000);
-    if(typeof(pi) === "undefined"){
+    if(typeof(tag) === "undefined"){
         Link.tag = generateTags();
     }else{
         Link.tag = tag;
@@ -31,13 +31,16 @@ function createLink(url, title, tag, summary){
 }
 
 function generateTags(){
-    let tag = [];
-    for(let i = 0; i < tagPool.length; i++){
-        if(Math.random() >= 0.6){
-            tag.push(tagPool[i]);
-        }
-    }
-    return tag;
+    // let tag = [];
+    // for(let i = 0; i < tagPool.length; i++){
+    //     if(Math.random() >= 0.6){
+    //         tag.push(tagPool[i]);
+    //     }
+    // }
+    // return tag;
+    let t = tagPool[Math.floor(Math.random() * 4)];
+    //console.log("生成 tag"+t);
+    return t;
 }
 
 
@@ -50,7 +53,7 @@ function initLinks(){
     return Links;
 }
 
-app.use( express.static('public') ); // serve any assets by their path under 'public' directory
+app.use( express.static('/') ); // serve any assets by their path under '/' directory (same dir as server.js)
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
 
 

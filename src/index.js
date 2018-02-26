@@ -9,7 +9,7 @@ const entertainmentButton = document.querySelector('.entertainment-Button');
 const financeButton = document.querySelector('.finance-Button');
 const politicsButton = document.querySelector('.politics-Button');
 const sportsButton = document.querySelector('.sports-Button');
-const sortByButton = document.querySelector('.sort-dropdown');//Not sure...
+const sortByButton = document.querySelector('.sortyBy');
 
 const form = document.querySelector('.input-form');//it contains all the input
 
@@ -48,7 +48,12 @@ function transUrlToInput(obj){
 	let type = 'text';
 	for(key in obj){
 		if(key === "id") continue;
-		str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+		//console.log(key);
+		if(key === "url"){
+			str += `<a href=${obj[key]}>${obj[key]}</a>`;
+		}else{
+			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+		}
 	}
 	return str;
 }
@@ -59,7 +64,7 @@ function transInputToObject(arr){
 		let value = element.value;
 		obj[element.name] = value;
 	});
-	console.log(obj);
+	//console.log(obj);
 	return obj;
 }
 
@@ -71,12 +76,14 @@ function vote(){
 //make whole list
 
 function render(){
+	//console.log("begin render");
 	addToList();
 	addListener();
 }
 
 
 function addToList() {
+	//console.log("addToList");
 	let urlList = [];
 	for(let i = 0; i < LinksToDisplay.length; i++){
 		let element = LinksToDisplay[i];
@@ -97,7 +104,7 @@ function generateList(urlList){
 
 function renderList(urlList){
 	//console.log(generateList( urlList));
-	console.log("erase urlcontent");
+	//console.log("erase urlcontent");
 	urlContent.innerHTML = "";
 	urlContent.innerHTML = generateList(urlList);
 }
@@ -105,7 +112,7 @@ function renderList(urlList){
 /*******************Input Validation Function*******************/
 
 function checkTitleInput(titleInput) {
-	console.log(titleInput.value);
+	//console.log(titleInput.value);
 	if( titleInput.value.length <= 0 ){
 		warnMessage = 'Please input a title!';
 		return false;
@@ -241,8 +248,9 @@ function renderEditSummaryMessage(){
 function clickSubmitFunc(event){
 	event.preventDefault();
 	if(checkValidInput()){
-		console.log("peform Add" + titleInput.value + " " + urlInput.value +" "+showList[showList.selectedIndex].text+" "+summaryInput.value);
+		console.log("peform Add", showList[showList.selectedIndex].text);
 		performAddPostRequest(titleInput.value,urlInput.value,showList[showList.selectedIndex].text,summaryInput.value);
+		resetInput();
 	}else{
 		remindMessage.innerHTML = warnMessage;
 	}
@@ -257,10 +265,11 @@ function clickCancelFunc(){
 	const parent = this.parentNode;
 	const grandParent = parent.parentNode;
 	const child = parent.childNodes;
-	let i = 0;
-	child.forEach(e => {
+	for(let i = 0; i  < 4; i++){
+		if(i === 1 || i ===2) continue;
+		let e = child[i];
 		e.setAttribute('disabled','disabled');
-	});
+	}
 	this.parentNode.nextSibling.innerHTML = '';
 	toggleVisible(this, 1);
 }
@@ -268,9 +277,11 @@ function clickCancelFunc(){
 function clickSaveFunc(){
 	const parent = this.parentNode;
     const child = parent.childNodes;
-    child.forEach( e => {
-    	e.getAttribute( 'disabled','disabled' );
-    } )
+		for(let i = 0; i  < 4; i++){
+			if(i === 1 || i ===2) continue;
+			let e = child[i];
+			e.setAttribute('disabled','disabled');
+		}
 		let Link = LinksMap[this.parentNode.attributes["id"].value];
 		Link.title = child[0].value;
 		Link.tag = child[3].value;
@@ -292,28 +303,28 @@ function clickEditFunc(){
 }
 
 function clickEducation(){
-	filter(education);
+	filter('Education');
 	render();
 }
 
 function clickEntertainment(){
-	filter(entertainment);
+	filter('Entertainment');
 	render();
 }
 
 function clickFinance(){
-	filter(finance);
+	filter('Finance');
 	render();
 }
 
 function clickPolitics(){
-	filter(politics);
-	Render();
+	filter('Politics');
+	render();
 }
 
 function clickSports(){
-	filter(sports);
-	Render();
+	filter('Sports');
+	render();
 }
 
 function clickAll(){
@@ -325,14 +336,16 @@ function clickAll(){
 }
 
 function clickSort(){
-	if(sortByButton.value === vote){
+	console.log(sortByButton[sortByButton.selectedIndex].value);
+	if(sortByButton[sortByButton.selectedIndex].value === 'vote'){
 		sortByVote();
 		render();
 	}
-	if(sortByButton.value === title){
+	if(sortByButton[sortByButton.selectedIndex].value === 'title'){
 		sortByTitle();
 		render();
 	}
+	
 }
 function toggleVisible(node, cur) {//实际需要根据效果更改
 	node.parentNode.classList.remove('mark-list');
@@ -368,7 +381,7 @@ function addClickListener(){
 	politicsButton.addEventListener('click',clickPolitics);
 	sportsButton.addEventListener('click',clickSports);
 	//allButton.addEventListener('click',clickSports);
-	sortByButton.addEventListener( 'click',clickSort );
+	sortByButton.addEventListener( 'change',clickSort );
 	Array.from(document.getElementsByClassName('url-content')).forEach(element =>
     element.addEventListener('click', toggleComplete)
   );
@@ -378,11 +391,11 @@ function addInputListener(){
 	titleInput.addEventListener('blur',renderTitleMessage);
 	urlInput.addEventListener('blur',renderUrlMessage);
 	summaryInput.addEventListener('blur',renderSummaryMessage);
-	tagInput.addEventListener('blur',renderTagMessage);
+	//tagInput.addEventListener('blur',renderTagMessage);
 }
 
 function addSmallButtonListener(){
-	console.log("add small listener");
+	//console.log("add small listener");
 	Array.from(document.getElementsByClassName('delete-button')).forEach(
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
@@ -454,10 +467,11 @@ const callDeletePostRequest = ( (Link) => {
 });
 
 const performDeletePostRequest = ( (Link) => {
+	//console.log("perform delete");
 	callDeletePostRequest(Link)
-	.then(() => {
-		deleteLoalData(Link);
-		console.log('delete render');
+	.then(fromJson => {
+		deleteLoalData(fromJson);
+		//console.log('delete render');
 		render();
 	})
 	.catch( error => {
@@ -495,24 +509,30 @@ const callEditPostRequest = ( (Link) => {
 // 发送edit请求
 const performEditPostRequest = (Link) => {
 	callEditPostRequest(Link)
-	.then(() => {
-		editLoalData(Link);
+	.then(fromJson => {
+		//console.log("edit part from server" + fromJson.title);
+		editLoalData(fromJson);
 		render();
 	})
 	.catch( error => {
+		console.log("edit part" + error);
 		remindMessage.innerHTML = error;
 	});
 };
 
 function editLoalData(Link){
 	LinksMap[Link.id] = Link;
-	if(LinksToDisplay[i].id == Link.id){
-		LinksToDisplay[i] = Link;
+	for(let i = 0; i < LinksToDisplay.length; i++){
+
+		if(LinksToDisplay[i].id === Link.id){
+			//console.log(LinksToDisplay[i].id, " vs ", Link.title);
+			LinksToDisplay[i] = Link;
+		}
 	}
 }
 
 /******************** Add Functions *************************/
-const callAddPostRequest = ({titleValue, urlValue, tagValue, summaryValue}) => {
+const callAddPostRequest = (titleValue, urlValue, tagValue, summaryValue) => {
 	return fetch('/add',{method: 'POST', body: JSON.stringify({
 		title : titleValue,
 		url : urlValue,
@@ -534,13 +554,15 @@ const callAddPostRequest = ({titleValue, urlValue, tagValue, summaryValue}) => {
 };
 
 //发送添加请求
-const performAddPostRequest = ({titleValue, urlValue, tagValue, summaryValue}) => {
+const performAddPostRequest = (titleValue, urlValue, tagValue, summaryValue) => {
+	//console.log("call add" + titleValue + urlValue + tagValue + summaryValue);
 	callAddPostRequest(titleValue, urlValue, tagValue, summaryValue)
-	.then(() => {
-		addLoalData(Link);
+	.then( fromJson => {
+		addLoalData(fromJson);
 		render();
 	})
 	.catch( error => {
+		console.log("add error -> "+ error);
 		remindMessage.innerHTML = error;
 	});
 };
@@ -548,6 +570,7 @@ const performAddPostRequest = ({titleValue, urlValue, tagValue, summaryValue}) =
 function addLoalData(Link){
 	LinksMap[Link.id] = Link;
 	LinksToDisplay.push(Link);
+	render();
 }
 
 
@@ -555,20 +578,26 @@ function addLoalData(Link){
 function filter(field){
 	LinksToDisplay = [];
 	for(let key in LinksMap){
+		//console.log(LinksMap[key].tag);
 		if(LinksMap[key].tag.includes(field)){
-			LinksMap.push(LinksMap[key]);
+			LinksToDisplay.push(LinksMap[key]);
 		}
 	}
-	render();
 }
 /********************Sort funtion*************************/
 //vote
-function Sort(){
+
+function sortByVote(){
 	LinksToDisplay.sort((a,b) => {
-		return a.vote - b.vote;
+	 return a.vote - b.vote;
 	});
-	render();
-}
+   }
+   
+   function sortByTitle(){
+	LinksToDisplay.sort((a,b) => {
+	 return a.vote - b.vote;
+	});
+   }
 
 
 /********************Init funtion*************************/
