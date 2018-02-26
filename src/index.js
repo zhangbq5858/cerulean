@@ -49,7 +49,11 @@ function transUrlToInput(obj){
 	for(key in obj){
 		if(key === "id") continue;
 		//console.log(key);
-		str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+		if(key === "url"){
+			str += `<a href=${obj[key]}>${obj[key]}</a>`;
+		}else{
+			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+		}
 	}
 	return str;
 }
