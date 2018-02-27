@@ -24,6 +24,7 @@ let LinksMap = {};
 let LinksToDisplay = [];
 
 let warnMessage;
+const debug = false;
 
 const str = '<button class="vote-button">vote</button>'+
 			'<button class="edit-button">edit</button>'+
@@ -277,12 +278,33 @@ function clickSaveFunc(){
 			let e = child[i];
 			e.setAttribute('disabled','disabled');
 		}
-		let Link = LinksMap[this.parentNode.attributes["id"].value];
+		let Link = LinksMap[this.parentNode.attributes["id"].value];//todo: follow name convention
 		Link.title = child[0].value;
 		Link.tag = child[3].value;
-		//console.log("saveFunction title and tag is" + child[0].value +" "+ child[3].value);
+		//console.log("saveFunction title and tag is" + child[0].value +" "+ child[3].value); //todo: better way to log
 	performEditPostRequest(Link);
 	toggleVisible(this, 0);
+}
+
+// vote router
+function clickVoteFunc(){
+	let Link = LinksMap[this.parentNode.attributes["id"].value];
+	if(debug) console.log(Link);
+
+	let isVoted = this.getAttribute('type') === 'unvote'; // name = [undifined, vote, unvote]
+	if(isVoted) {
+		Link.vote -= 1;
+		this.setAttribute('type', 'vote');
+		this.innerHTML = 'Vote';
+		this.previousSibling.previousSibling.value = Link.vote;
+		postUnvoteRequest(Link);
+	} else {
+		Link.vote += 1;
+		this.setAttribute('type', 'unvote');
+		this.innerHTML = 'Unvote';
+		this.previousSibling.previousSibling.value = Link.vote;
+		postVoteRequest(Link);
+	}
 }
 
 function clickEditFunc(){
@@ -395,7 +417,7 @@ function addSmallButtonListener(){
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
 	Array.from(document.getElementsByClassName('vote-button')).forEach(
-		element => element.addEventListener('click',clickDeleteFunc)////斌哥，这块加vote的算法)
+		element => element.addEventListener('click',clickVoteFunc) //todo: a better name
 		);
 		Array.from(document.getElementsByClassName('save-button')).forEach(
 		element => element.addEventListener('click',clickSaveFunc)
@@ -503,7 +525,7 @@ const callEditPostRequest = ( (Link) => {
 
 // send edit request
 const performEditPostRequest = (Link) => {
-	callEditPostRequest(Link)
+	callEditPostRequest(Link) //todo: bad name
 	.then(fromJson => {
 		//console.log("edit part from server" + fromJson.title);
 		editLoalData(fromJson);
@@ -514,6 +536,20 @@ const performEditPostRequest = (Link) => {
 		remindMessage.innerHTML = error;
 	});
 };
+
+const postVoteRequest = (Link) => {
+	fetch('/vote', {method:'POST', body: JSON.stringify(Link)})
+	.catch ((error) => {
+		if(debug) console.log('postVoteRequest() failed; ' + Link);
+	});
+}
+
+const postUnvoteRequest = (Link) => {
+	fetch('/unvote', {method:'POST', body: JSON.stringify(Link)})
+	.catch ((error) => {
+		if(debug) console.log('postVoteRequest() failed; ' + Link);
+	});
+}
 
 function editLoalData(Link){
 	LinksMap[Link.id] = Link;
