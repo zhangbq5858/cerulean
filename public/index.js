@@ -155,7 +155,7 @@ function resetWarn(){
 function checkAllInput(){
 	for( let i = 0; i < form.elements.length -2; i++ ){
 		if( form.elements[i].value.length <= 0 ){
-			warnMessage = 'Please fill all the input!';
+			warnMessage = 'Please fill out all the fields!';
 			return false;
 		}else{
 			warnMessage = '';
