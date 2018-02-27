@@ -67,9 +67,61 @@ function transInputToObject(arr){
 	//console.log(obj);
 	return obj;
 }
+/*******************Vote/Unvote function******************/
+/*
+* Logic:
+* initial: page reload; get votes from server
+* vote:
+      - add this URL to the votes list
+      - post `/upvote` to the remote with the URL as value
+      - change the `vote` button to `unvote`
 
-function vote(){
-//斌哥，这块加vote算法
+* unvote:
+      - remove this URL from the votes list
+      - post `/downvote` to the remote with the URL as value
+      - change the `unvote` button to `vote`
+* author: Bin Shi
+*/
+
+const debug = true;
+
+function clickVoteFunc(){
+	let url = LinksMap[this.parentNode.attributes["id"].value];
+	console.log(url.url);
+	let isVoted = this.getAttribute('type') === 'unvote'; // name = [undifined, vote, unvote]
+
+	if(isVoted) {
+		fetch('/unvote', {method:'POST', body: JSON.stringify(url)})
+		.then (response => {
+			if(debug) console.log(response.json());
+			editLoalData(response.json());
+		})
+		.catch ( (error) => {
+			msg = url + " failed voting!" + error;
+			if(debug) console.log(msg);
+			Promise.reject(msg);
+		});
+		this.setAttribute('type', 'vote');
+		this.innerHTML = 'Vote';
+	} else {
+		fetch('/vote', {method:'POST', body: JSON.stringify(url)})
+		.then (response => {
+			if(debug) console.log(response.json());
+			// this.parentNode.nextSibling.innerHTML
+			console.log(response.json() + "accept from serve");
+			return reqponse.json();
+		})
+		.then(fromJson => {			editLoalData(response.json());
+		})
+		.catch ( (error) => {
+			msg = url + " failed voting!" + error;
+			if(debug) console.log(msg);
+			Promise.reject(msg);
+		});
+
+		this.setAttribute('type', 'unvote');
+		this.innerHTML = 'Unvote';
+	}
 }
 
 /*******************Make List Functions*******************/
@@ -399,9 +451,10 @@ function addSmallButtonListener(){
 	Array.from(document.getElementsByClassName('delete-button')).forEach(
 		element => element.addEventListener('click',clickDeleteFunc)
 		);
+
 	Array.from(document.getElementsByClassName('vote-button')).forEach(
-		element => element.addEventListener('click',clickDeleteFunc)////斌哥，这块加vote的算法)
-		);
+	element => element.addEventListener('click', clickVoteFunc));
+
 		Array.from(document.getElementsByClassName('save-button')).forEach(
 		element => element.addEventListener('click',clickSaveFunc)
 		);
