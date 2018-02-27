@@ -354,11 +354,11 @@ function clickAll(){
 
 function clickSort(){
 	console.log(sortByButton[sortByButton.selectedIndex].value);
-	if(sortByButton[sortByButton.selectedIndex].value === 'vote'){
+	if(sortByButton[sortByButton.selectedIndex].value === "vote"){
 		sortByVote();
 		render();
 	}
-	if(sortByButton[sortByButton.selectedIndex].value === 'title'){
+	if(sortByButton[sortByButton.selectedIndex].value === "title"){
 		sortByTitle();
 		render();
 	}
@@ -624,8 +624,16 @@ function sortByVote(){
    }
 
    function sortByTitle(){
-	LinksToDisplay.sort((a,b) => {
-	 return a.vote - b.vote;
+	LinksToDisplay.sort(function (a,b){
+		let titleA = a.title.toUpperCase();
+		let titleB = b.title.toUpperCase();
+		if( titleA < titleB ){
+			return -1;
+		}
+		if( titleA > titleB ){
+			return 1;
+		}
+		return 0;
 	});
    }
 
