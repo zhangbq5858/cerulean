@@ -1,11 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Cabin|Caveat|Exo|Exo+2|Francois+One|Gloria+Hallelujah|Kalam|Kavivanar|Lobster|Nanum+Pen+Script|Neucha|PT+Sans+Caption|Permanent+Marker|Rock+Salt');
 
 body {
-<<<<<<< HEAD:public/index.css
     background: repeating-radial-gradient(pink, powderblue);
-=======
-    background-image: url("https://cdn.pixabay.com/photo/2018/02/07/16/06/love-3137380_1280.jpg");
->>>>>>> a8ebd63683fc8266a6ecb8fa8ad5214815bd3775:src/index.css
     display: block;
     height: 100%;
 }
