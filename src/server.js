@@ -91,9 +91,17 @@ app.post('/delete',(req, resp) => {
 });
 
 app.post('/vote', (req, resp) => {
-    const Link = req.body.Link;
-    // add vote change function
+  const id = req.body.id;
+  let Link = LinksMap[id] ;
+  Link.vote += 1;
+  resp.send(JSON.stringify(Link));
+});
 
+app.post('/unvote', (req, resp) => {
+  const id = req.body.id;
+  let Link = LinksMap[id] ;
+  Link.vote -= 1;
+  resp.send(JSON.stringify(Link));
 });
 
 app.post('/title',(req,resp) => {
