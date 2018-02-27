@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Cabin|Caveat|Exo|Exo+2|Francois+One|Gloria+Hallelujah|Kalam|Kavivanar|Lobster|Nanum+Pen+Script|Neucha|PT+Sans+Caption|Permanent+Marker|Rock+Salt');
 
 body {
-    /* background-image:url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520192890&di=6242094b3bea840854a4d665f5734ff9&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F12%2F31%2F88%2F25i58PICtVW.jpg"); */
-    background-size: 100%;
+    background: repeating-radial-gradient(pink, powderblue);
+    display: block;
+    height: 100%;
 }
 .header {
     font-size: 40px;
@@ -10,6 +11,7 @@ body {
     font-family: 'Papyrus', fantasy;
     font-style: italic;
     font:bold;
+    color:black;
 }
 
 .warn-message {
@@ -22,28 +24,28 @@ body {
 }
 /* Username Display */
 #userName {
-  -webkit-user-select: none; /* Chrome/Safari */
+  -webkit-user-select: none; /* Chrome/Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
   margin: 4em auto;
-  width: 100px;
-  height: 30px;
+  width: 100px; 
+  height: 30px; 
   line-height: 30px;
-  background:yellow;
+  background:pink;
   color: black;
   font-weight: 700;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: center;
   border: 1px solid white;
   position: absolute;
-  top: 0;
-  left: 20px;
+  top: 0; 
+  left: 20px; 
   border-radius: 50%;
 
 }
 /* Style the sort by dropdown menu */
 .nav-main-sort {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
     font: bold;
 }
 /* Style the top navigation bar */
@@ -65,14 +67,13 @@ body {
     font: bold;
     cursor: pointer;
     border-radius: 50%;
-    background-color:#FF69B4;
+    background-color:#FFB6C1;
 
 }
 
 /* Change color on hover */
 .topnav button:hover {
-    background-color:#FFFACD;
-    color: black;
+    background-color:#FFFACD;   
 }
 
 #url-tag-header {
@@ -80,16 +81,16 @@ body {
     height: 300px;
     border: 1px solid black;
     flex: 1;
-
+    
 }
 #url-tag-header div {
     display: inline-block;
     flex: 1;
-}
+} 
 
 .input-form {
     position: absolute;
-    top: 10px;
+    top: 10px; 
     right: 20px;
     display: inline-block;
 }
@@ -98,11 +99,7 @@ body {
     display: block;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
 }
-
-.submit-button {
-    cursor: pointer;
-}
-.reset-button {
+.input-form button {
     cursor: pointer;
 }
 
@@ -134,13 +131,13 @@ h4 {
     flex-direction: column;
     justify-content: center;
     width: 80%;
-    margin: 1% auto;
+    margin: 5% auto;
 }
 .url-content > li {
     display: flex;
     justify-content: center;
-    width: 100%;
-    padding: 20px;
+    width: 80%; 
+    padding: 30px;
 }
 
 li > input {
@@ -169,65 +166,32 @@ li > input:disabled {
 
 .vote-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 
 }
 .edit-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 }
 
 .delete-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 }
 .save-button {
     display: inline;
-    background-color: #f44336;
+    background-color: #DB7093;
     border-radius: 2px;
 
 }
 .cancel-button {
     display: inline;
-    background-color: #f44336;
+    background-color:#DB7093;
     border-radius: 2px;
 }
 
-.multiselect {
-    width: 200px;
-}
-
-.selectBox {
-    position: relative;
-}
-
-.selectBox select {
-    width: 100%;
-    font-weight: bold;
-}
-
-.overSelect {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#checkboxes {
-    display: none;
-    border: 1px #dadada solid;
-}
-
-#checkboxes label {
-    display: block;
-}
-
-#checkboxes label:hover {
-    background-color: #1e90ff;
-}
