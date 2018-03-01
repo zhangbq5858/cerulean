@@ -175,6 +175,23 @@ This list will expand:
 * Feb 19, 11:59 pm - Have the initial design design concept in the /admin/design/ directory.  Have the /admin/roles.md file filled in.
 * Feb 26, 6:29 pm - Have JS, HTML, and CSS for both the front-end and the services in the /src/ directory (subdirectories are fine).  A package.json at your repo root should let me try the app with `npm install; npm start`.  The page should work well enough to be usable, but bugs are expected.
 * Mar 5 - Spring Break.  No deadline, but you should make sure you'll be able to make the Mar 12 deadline.
-* Mar 12 - To Be Announced
+* Mar 12, 6:29 pm  - Bugs are expected to be corrected.  The requirements of *Added Requirement* and *Modified Requirement* are complete.  All of this is in your master branch.
 
+## Ongoing Requirements
 
+### Added Requirements
+
+* Create a service call that returns an id that returns 1, 2, or 3.  Each call will return the number in the list after the previous number it sent, wrapping around to the beginning as needed.  So on the first call (from anywhere) it will return 1, and on the second call (from the same page or not) returns 2, then 3, then 1 again and so forth.  Do so as a POST, not a GET (be sure to understand why I'm saying that).
+* The service may return this number inside whatever data structure you wish (e.g. it might return "2" or it could return "{ userId: 2 }")
+* The page will, when the page is loaded, call the above fake id service.  This will simulate a login - on page load the user is considered "logged in".  On page reload the user is considered "logged in" as a different user;
+* The page will let the user know what their id for this page load is (example: text in the header "Welcome User 2!") 
+
+### Modified Requirements
+
+* Previous rules about when votes are displayed have changed
+* When a user votes for a url, that page will remember that they voted for that url
+* Votes persist between page reloads
+* The page will not allow a user to vote for a url that they have previously voted for
+    * Because the logged in user will change on reload, it will take a few reloads to be considered the original user. 
+    * Example: If User 1 has voted for URL A and no one else has, after voting User 1 cannot vote on URL A again. On page reload the page displays as User 2, which will see the impact of the User 1's voting, but will be able to vote for URL A themselves because User 2 has not yet voted on URL A.  Reload again and the same rules apply for User 3.  Another reload will display as User 1 and they will not be able to vote for URL A because User 1 had previously voted for URL A
+* The UI will distinguish which urls the current user has voted for and which ones they have not
