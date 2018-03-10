@@ -48,7 +48,7 @@ function transUrlToInput(obj){
 			 continue;
 		//console.log(key);
 		}else{
-			str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
+				str += `<input type=${type} name=${key} value=${obj[key]} disabled='disabled'>`;
 		}
 	}
 	return str;
