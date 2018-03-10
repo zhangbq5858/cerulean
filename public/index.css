@@ -110,14 +110,7 @@ body {
   padding: 0%;
   box-sizing: border-box;
 }
-h4 {
-    display: block;
-    -webkit-margin-before: 1.33em;
-    -webkit-margin-after: 1.33em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    font-weight: bold;
-}
+
 .url-tag-header > h4 {
     font-family: fantasy;
     text-align: center;
