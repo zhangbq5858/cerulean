@@ -84,6 +84,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		console.log("check data part -> ",this.state.user);
     return (
       <div>
+      	<header className="page-title">SurfVibes</header>
         <Content 
         	linksToDisplay={this.state.linksToDisplay}
 					buttonClickFunc={this.buttonClickFunc}
