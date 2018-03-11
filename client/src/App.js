@@ -17,7 +17,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
-      editorVisible: true
+      editorVisible: false
     };
 
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
@@ -143,14 +143,14 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	//	console.log("check data part -> ",this.state.user);
     return (
       <div>
-		<header className="page-title">SurfVibes</header>	
+        <header className="page-title">SurfVibes</header>
         <UserID user={this.state.user}/>
         <Editor
           editorVisible={this.state.editorVisible}
           handleEditorDisplay={this.toggleEditorDisplay}
           handleSubmit={this.save}
         />
-        <Content 
+        <Content
         	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
 					status={this.state.status}
