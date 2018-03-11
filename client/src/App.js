@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import './styles/index.css';
-
+//import './styles/index.css'
+import './App.css';
 import Content from './components/Content';
 import UserID from './components/UserID';
 import Editor from './components/Editor'
