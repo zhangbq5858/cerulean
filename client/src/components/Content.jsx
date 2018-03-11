@@ -12,7 +12,7 @@ const Content = ({linksToDisplay, buttonClickFunc, status, user}) => {
       content.push( <UrlList
         Link={Link}
         buttonClickFunc={buttonClickFunc}
-        userId={user.id}
+        user={user}
         />);
     }
     return content;
