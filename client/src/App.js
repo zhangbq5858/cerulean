@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 
 import Content from './components/Content';
 import UserID from './components/UserID';
+import Editor from './components/Editor'
 
 const fetchFunc = require('./FetchFunc');
+const debug = true;
 
 class App extends Component { // 三部分 一部分 submit，一部分 过滤 一部分 content
   constructor(props){
@@ -15,12 +17,15 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
+      editorVisible: true
     };
 
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
+    this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
+    this.save = this.save.bind(this);
 	}
-	
+
 	buttonClickFunc = (value, linkId, userId) => {
 
 		if(value === "add"){
@@ -108,12 +113,43 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		});
 	}
 
+  // Editor by Bin
+  save(url) {
+    //id, title, url, tag, summary
+    if(debug) console.log(url);
+
+    if (url['id']) { // update
+
+    } else { // create
+      fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
+      .then(link => {
+        if(debug) console.log(link);
+        let temp = this.state.linksMap;
+        temp[link.id] = link;
+        this.setState({linksMap: temp});
+      })
+      .catch(error => console.log('Failed to save '+ url));
+    }
+
+    if(debug) console.log(this.state.linksMap);
+  }
+
+  toggleEditorDisplay() {
+    const tempVisibility = !this.state.editorVisible;
+    this.setState({editorVisible: tempVisibility}); //setState
+  } //toggleAddDisplay
+
   render() {
 	//	console.log("check data part -> ",this.state.user);
     return (
       <div>
 		<header className="page-title">SurfVibes</header>	
         <UserID user={this.state.user}/>
+        <Editor
+          editorVisible={this.state.editorVisible}
+          handleEditorDisplay={this.toggleEditorDisplay}
+          handleSubmit={this.save}
+        />
         <Content 
         	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
