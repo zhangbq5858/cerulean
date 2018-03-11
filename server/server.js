@@ -59,17 +59,31 @@ app.post('/delete',(req, resp) => {
 });
 
 app.post('/vote', (req, resp) => {
-  const id = req.body.id;
-  let Link = LinksMap[id] ;
+  const linkId = req.body.linkId;
+  const userId = req.body.userId;
+  console.log("votepart -> ", linkId, userId)
+  let Link = LinksMap[linkId];
+  let User = UsersMap[userId];
   Link.vote += 1;
-  resp.send(JSON.stringify(Link));
+  User.votedUrls.push(linkId);
+  resp.send(JSON.stringify({
+      Link: Link,
+      User: User,
+  }));
 });
 
 app.post('/unvote', (req, resp) => {
-  const id = req.body.id;
-  let Link = LinksMap[id] ;
-  Link.vote -= 1;
-  resp.send(JSON.stringify(Link));
+    const linkId = req.body.linkId;
+    const userId = req.body.userId;
+    let Link = LinksMap[linkId];
+    let User = UsersMap[userId];
+    const votedIndex = User.votedUrls.indexOf(linkId);
+    Link.vote -= 1;
+    User.votedUrls.splice(votedIndex,1);
+    resp.send(JSON.stringify({
+        Link: Link,
+        User: User,
+    }));
 });
 
 app.post('/title',(req,resp) => {

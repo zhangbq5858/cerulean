@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 //import './styles/index.css';
 
 import Content from './components/Content';
+import UserID from './components/UserID';
 
 const fetchFunc = require('./FetchFunc');
 
@@ -28,11 +29,15 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		}else if(value === "edit"){
 			//fetchFunc.editPostRequest();
 		}else if(value === "delete"){
-			console.log("delete key clicked");
+			//console.log("delete key clicked");
 			fetchFunc.callDeletePostRequest(linkId)
 			.then( fromJson => {
+				const linksMap = Object.assign({},this.state.linksMap);
+				delete linksMap[fromJson.linkId];
+				// console.log("data after delete ->", linksMap);
+				// console.log("data after delete ->", this.state.linksMap);
 				this.setState({
-					linksMap: this.state.linksMap.filter((elem, id) => id !== fromJson.linkId),
+					linksMap:linksMap,
 				})
 			})
 			.catch(error => {
@@ -41,9 +46,21 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		}else if (value === "save"){
 
 		}else if(value === "vote"){
-
+			fetchFunc.postVoteRequest(linkId,userId)
+			.then(fromJson =>{
+				return;
+			})
+			.catch(error => {
+				console.log("vote part's error is -> ", error);
+			});
 		}else if(value === "unvote"){
-
+			fetchFunc.postUnvoteRequest(linkId, userId)
+			.then(fromJson => {
+				return;
+			})
+			.catch(error => {
+				console.log("unvote part's error is -> ", error);
+			});
 		}
 		else{ // value === "cancel"
 
@@ -53,7 +70,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
 	convertMapToArray = (linksMap) => {
 		let res = [];
-		console.log("convert map to array part, checkout data -> ", this.state.filter);
+		//console.log("convert map to array part, checkout data -> ", this.state.filter);
 		for(let key in linksMap){
 			if(this.state.filter === null || linksMap[key].tag.includes(this.state.filter))
 				res.push(linksMap[key]);
@@ -76,7 +93,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		// 	console.log("check data part -> ",this.state.user);
 		// })
 		.catch(error => {
-			console.log("getdata part's error is -> ", error);
+			//console.log("getdata part's error is -> ", error);
 		});
 	}
 
@@ -84,7 +101,8 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		console.log("check data part -> ",this.state.user);
     return (
       <div>
-      	<header className="page-title">SurfVibes</header>
+        <header className="page-title">SurfVibes</header>
+        <UserID user={this.state.user}/>
         <Content 
         	linksToDisplay={this.state.linksToDisplay}
 					buttonClickFunc={this.buttonClickFunc}
