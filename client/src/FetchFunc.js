@@ -19,27 +19,6 @@ const callDeletePostRequest = ( (linkId) => {
 	});
 });
 
-// const deletePostRequest =  (Link) => {
-// 	//console.log("perform delete");
-// 	callDeletePostRequest(Link)
-// 	.then(fromJson => {
-// 		deleteLoalData(fromJson);
-// 		//console.log('delete render');
-// 		render();
-// 	})
-// 	.catch( error => {
-// 		console.log(error + " delete part");
-// 	});
-// };
-
-// function deleteLoalData(Link){
-// 	delete LinksMap[Link.id];
-// 	for(let i = 0; i < LinksToDisplay.length; i++){
-// 		if(LinksToDisplay[i].id == Link.id){
-// 			LinksToDisplay.splice(i,1);
-// 		}
-// 	}
-// }
 
 /********************Edit Functions*************************/
 const callEditPostRequest = ( (Link) => {
@@ -71,19 +50,45 @@ const callEditPostRequest = ( (Link) => {
 // 	});
 // };
 
-const postVoteRequest = (Link) => {
-	fetch('/vote', {method:'POST', body: JSON.stringify(Link)})
+const postVoteRequest = ((linkId, userId) => {
+	return fetch('/vote', {method:'POST', body: JSON.stringify({
+		linkId: linkId,
+		userId: userId,
+	})})
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
 	.catch ((error) => {
-		console.log('postVoteRequest() failed; ' + Link);
+		console.log("server port error is that -> ", error);
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
 	});
-}
+});
 
-const postUnvoteRequest = (Link) => {
-	fetch('/unvote', {method:'POST', body: JSON.stringify(Link)})
+const postUnvoteRequest = ((linkId, userId) => {
+	return fetch('/unvote', {method:'POST', body: JSON.stringify({
+		linkId: linkId,
+		userId: userId,
+	})})
+	.then(response => {
+		if(!response.ok){
+			return Promise.reject("error-response-not-okay");
+		}
+		return response.json();
+	})
 	.catch ((error) => {
-		console.log('postVoteRequest() failed; ' + Link);
+		console.log("server port error is that -> ", error);
+		if(error.toString().startsWith('error-')){
+			return Promise.reject(error);
+		}
+		return Promise.reject('error-response-josn-bad');
 	});
-}
+});
 
 // function editLoalData(Link){
 // 	LinksMap[Link.id] = Link;

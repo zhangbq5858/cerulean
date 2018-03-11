@@ -5,6 +5,11 @@ const Button = ({  clickFunc, text}) => {
   const onClickFunc = (event) => {
     console.log("button clicked", event.target.innerHTML);
      clickFunc(event.target.innerHTML);
+     if(event.target.innerHTML === "vote"){
+      event.target.innerHTML = "unvote";
+     }else if(event.target.innerHTML === "unvote"){
+      event.target.innerHTML = "vote";
+     }
   }
 
   return (
