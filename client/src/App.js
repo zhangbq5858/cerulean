@@ -11,7 +11,6 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     super(props);
     this.state = {
 			linksMap: null,
-			linksToDisplay: [],//content数据
 			tagPool:[], //tag filter
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
@@ -34,10 +33,8 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			.then( fromJson => {
 				const linksMap = Object.assign({},this.state.linksMap);
 				delete linksMap[fromJson.linkId];
-				// console.log("data after delete ->", linksMap);
-				// console.log("data after delete ->", this.state.linksMap);
 				this.setState({
-					linksMap:linksMap,
+					linksMap,
 				})
 			})
 			.catch(error => {
@@ -48,15 +45,29 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		}else if(value === "vote"){
 			fetchFunc.postVoteRequest(linkId,userId)
 			.then(fromJson =>{
-				return;
+				const linksMap = Object.assign({},this.state.linksMap);
+				const usersMap = Object.assign({},this.state.usersMap);
+				linksMap[fromJson.Link.id] = fromJson.Link;
+				usersMap[fromJson.User.id] = fromJson.User;
+				this.setState({
+					linksMap,
+					usersMap,
+				})
 			})
 			.catch(error => {
 				console.log("vote part's error is -> ", error);
 			});
 		}else if(value === "unvote"){
 			fetchFunc.postUnvoteRequest(linkId, userId)
-			.then(fromJson => {
-				return;
+			.then(fromJson =>{
+				const linksMap = Object.assign({},this.state.linksMap);
+				const usersMap = Object.assign({},this.state.usersMap);
+				linksMap[fromJson.Link.id] = fromJson.Link;
+				usersMap[fromJson.User.id] = fromJson.User;
+				this.setState({
+					linksMap,
+					usersMap,
+				})
 			})
 			.catch(error => {
 				console.log("unvote part's error is -> ", error);
@@ -68,12 +79,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
 	}
 
-	convertMapToArray = (linksMap) => {
+	convertMapToArray = () => {
 		let res = [];
 		//console.log("convert map to array part, checkout data -> ", this.state.filter);
-		for(let key in linksMap){
-			if(this.state.filter === null || linksMap[key].tag.includes(this.state.filter))
-				res.push(linksMap[key]);
+		for(let key in this.state.linksMap){
+			if(this.state.filter === null || this.state.linksMap[key].tag.includes(this.state.filter))
+				res.push(this.state.linksMap[key]);
 		}
 		return res;
 	}
@@ -84,7 +95,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			console.log("getdata part's data is -> ", fromJson.user, this.state.status);
 			this.setState({
 				linksMap: fromJson.linksMap,
-				linksToDisplay: this.convertMapToArray(fromJson.linksMap),
+				//linksToDisplay: this.convertMapToArray(),
 				tagPool:fromJson.tagPool,
 				user: fromJson.user,
 			});
@@ -98,13 +109,13 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	}
 
   render() {
-		console.log("check data part -> ",this.state.user);
+	//	console.log("check data part -> ",this.state.user);
     return (
       <div>
-        <header className="page-title">SurfVibes</header>
+		<header className="page-title">SurfVibes</header>	
         <UserID user={this.state.user}/>
         <Content 
-        	linksToDisplay={this.state.linksToDisplay}
+        	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
 					status={this.state.status}
 					user={this.state.user}
