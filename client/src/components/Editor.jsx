@@ -35,7 +35,7 @@ class Editor extends Component {
 
     return (
       <div className="editor-panel">
-        <button name="add" onClick={ this.handleEditorDisplay } > Add URL </button>
+        <button name="add" onClick={ this.handleEditorDisplay } > Submit </button>
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
@@ -53,7 +53,7 @@ class Editor extends Component {
               <textarea ref="summary" placeholder="URL Summary"></textarea>
             </div>
             <div>
-              <button type="submit">Submit</button>
+              <button type="submit">Save</button>
               <button type="reset" onClick={ this.handleEditorDisplay }>Cancel</button>
             </div>
         </form>
