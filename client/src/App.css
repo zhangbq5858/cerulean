@@ -42,6 +42,34 @@ header {
   left: 20px;
 
 }
+.filter-sortBy {
+  margin-top: 30px;
+}
+
+.filter-sortBy button{
+  width: 110px;
+  height: 45px;
+  margin-right: 10px;
+  margin-left: 5px;
+  font-family: sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #000;
+  background-color:pink;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+.filter:hover {
+  background-color: blanchedalmond;
+  box-shadow: 0px 15 px 20px palevioletred;
+  color: palevioletred;
+
+}
 
 .editor-form label {
   font-family: Arial, Helvetica, sans-serif;
@@ -77,28 +105,45 @@ header {
 div button[name=add] {
   margin: 4em auto;
   width: 100px;
-  height: 30px;
+  height: 50px;
   line-height: 30px;
   background:pink;
   color: black;
   font-weight: 700;
   font-family: sans-serif;
-  border: 1px solid white;
   position: absolute;
   top: 0;
   right: 20px;
-  border-radius: 50%;
+  border-radius: 90%;
   cursor: pointer;
+}
+
+div button[name=add]:hover {
+  background-color: blanchedalmond;
+  box-shadow: 0px 15 px 20px palevioletred;
+  color: palevioletred;
 }
 
 .editor-panel button[type=submit] {
   background-color: pink;
   cursor: pointer;
   margin-right:20px;
+  height: 30px;
+}
+.editor-panel button[type=submit]:hover {
+  background-color: blanchedalmond;
+  box-shadow: 0px 15 px 20px palevioletred;
+  color: palevioletred;
 }
 .editor-panel button[type=reset] {
   background-color: pink;
   cursor: pointer;
+  height: 30px;
+}
+.editor-panel button[type=reset]:hover {
+  background-color: blanchedalmond;
+  box-shadow: 0px 15 px 20px palevioletred;
+  color: palevioletred;
 }
 
 
