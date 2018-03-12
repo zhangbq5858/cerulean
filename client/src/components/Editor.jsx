@@ -39,16 +39,13 @@ class Editor extends Component {
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
-              <label>Title</label>
-              <input type="text" ref="title"/>
+              <input type="text" ref="title" placeholder="Title" required/>
             </div>
             <div>
-              <label>URL</label>
-              <input type="url" ref="value"/>
+              <input type="url" ref="value" placeholder="URL" required/>
             </div>
             <div>
-              <label>Field</label>
-              <input type="text" ref="tags"/>
+              <input type="text" ref="tags" placeholder="Filed" required/>
             </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary"></textarea>
