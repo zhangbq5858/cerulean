@@ -41,15 +41,21 @@ header {
 
 }
 
-.editor-form text {
+.editor-form label {
   font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
 }
 .editor-body div{
+  top: 10px;
+  right: 20px;
+  display: inline-block;
   text-align: right;
+  
 }
+
 .editor-form textarea {
   background-color: rgb(252, 229, 188);
-
+  padding: 10px;
 }
 
 .editor-form input{
@@ -76,6 +82,7 @@ header {
   top: 0;
   right: 20px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .editor-panel button[type=submit] {
