@@ -17,9 +17,10 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
-      editorVisible: false
+      editorVisible: false,
+      currentLink: {}
     };
-
+//{id:'', title:'', url:'',tags:'',summary:'',vote:0}
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
     this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
@@ -32,6 +33,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			//fetchFunc.addPostRequest();
 		}else if(value === "edit"){
 			//fetchFunc.editPostRequest();
+      this.setState({
+        currentLink:this.state.linksMap[linkId]
+        , editorVisible:true
+      });
+      // if(debug) console.log(this.state.linksMap[linkId]);
 		}else if(value === "delete"){
 			//console.log("delete key clicked");
 			fetchFunc.callDeletePostRequest(linkId)
@@ -119,7 +125,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     if(debug) console.log(url);
 
     if (url['id']) { // update
-
+      fetchFunc.callEditPostRequest(url)
+      .then(link => {
+        let temp = this.state.linksMap;
+        temp[link.id] = link;
+        this.setState({linksMap: temp});
+      })
     } else { // create
       fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
       .then(link => {
@@ -139,6 +150,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     this.setState({editorVisible: tempVisibility}); //setState
   } //toggleAddDisplay
 
+
   render() {
 	//	console.log("check data part -> ",this.state.user);
     return (
@@ -149,6 +161,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           editorVisible={this.state.editorVisible}
           handleEditorDisplay={this.toggleEditorDisplay}
           handleSubmit={this.save}
+          currentLink={this.state.currentLink}
         />
         <Content
         	linksToDisplay={this.convertMapToArray()}
