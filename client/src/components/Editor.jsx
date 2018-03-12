@@ -42,12 +42,12 @@ class Editor extends Component {
               Title  <input type="text" ref="title"/>
             </div>
             <div>
-              <label>Value
+              <label>URL
               </label>
-              <input type="text" ref="value"/>
+              <input type="url" ref="value"/>
             </div>
             <div>
-              Tags  <input type="text" ref="tags"/>
+              Field  <input type="text" ref="tags"/>
             </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary"></textarea>

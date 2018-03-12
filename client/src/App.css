@@ -1,6 +1,100 @@
 @import url('https://fonts.googleapis.com/css?family=Acme|Amatic+SC|Cabin|Caveat|Exo|Exo+2|Francois+One|Gloria+Hallelujah|Kalam|Kavivanar|Lobster|Nanum+Pen+Script|Neucha|PT+Sans+Caption|Permanent+Marker|Rock+Salt');
 body {
-  background: repeating-radial-gradient(pink, powderblue);
+  background: repeating-radial-gradient(pink, powderblue); 
   display: block;
   height: 100%;
+}
+header {
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Papyrus', fantasy;
+  font-style: italic;
+  font: bold;
+  color: black;
+  margin: 30px;
+}
+
+
+.userid-show {
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+
+  -moz-user-select: none;
+  /* Firefox */
+
+  -ms-user-select: none;
+  /* IE10+ */
+
+  /* margin: 4em auto;
+  width: 100px;
+  height: 30px; */
+  line-height: 30px;
+  color: yellow;
+  text-shadow: 2px 2px 8px palevioletred;
+  font-weight: 600;
+  font-family: sans-serif;
+  font-style: italic;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 20px;
+
+}
+
+.editor-form text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.editor-body div{
+  text-align: right;
+}
+.editor-form textarea {
+  background-color: rgb(252, 229, 188);
+
+}
+
+.editor-form input{
+  background-color: rgb(252, 229, 188);  
+}
+.editor-form div{
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.editor-panel button[name=add] {
+  margin: 4em auto;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  background:pink;
+  color: black;
+  font-weight: 700;
+  font-family: sans-serif;
+  text-align: center;
+  border: 1px solid white;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  border-radius: 50%;
+}
+
+.editor-panel button[type=submit] {
+  background-color: pink;
+  cursor: pointer;
+}
+.editor-panel button[type=reset] {
+  background-color: pink;
+  cursor: pointer;
+}
+
+
+.Content button {
+  background-color: powderblue;
+  cursor: pointer;
+}
+
+.Content p {
+  padding: 20px;
+  border: 5px solid navajowhite;
+  background-color: palegoldenrod;
 }
