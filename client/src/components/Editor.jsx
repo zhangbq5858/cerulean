@@ -1,12 +1,12 @@
 // created by Bin in Mar, 2018
 import React, {Component} from 'react';
 
-const debug = true;
+const debug = false;
 
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = {id:'', title:'', url:'',tags:'',summary:'',vote:0};
+    this.state = {id:'', title:'', url:'',tags:[] ,summary:'',vote:0};
 
     this.handleEditorDisplay = this.handleEditorDisplay.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,24 +14,40 @@ class Editor extends Component {
     this.handleURLChange = this.handleURLChange.bind(this);
     this.handleTagsChange = this.handleTagsChange.bind(this);
     this.handleSummaryChange = this.handleSummaryChange.bind(this);
+    this.clearInput = this.clearInput.bind(this);
+    this.cancel = this.cancel.bind(this);
+  }
+
+  clearInput(){
+    this.setState({id:'', title:'', url:'',tags:[] ,summary:'',vote:0});
   }
 
   handleEditorDisplay = ()=> {
     this.props.handleEditorDisplay();
   }
 
+  cancel(){
+    this.props.handleEditorDisplay();
+    this.clearInput();
+  }
+
   handleSubmit = (event)=>{
+    let tags = [];
+    if(this.refs.tags.value){
+      tags = this.refs.tags.value.split(' ');
+    }
     const item = {
       id: this.props.currentLink.id,
       vote: this.props.currentLink.vote,
       title:this.refs.title.value,
       text:this.refs.url.value,
-      tags:this.refs.tags.value.split(' '),
+      tags:tags,
       summary:this.refs.summary.value
     }
-    event.preventDefault();
     this.props.handleSubmit(item);
     this.props.handleEditorDisplay();
+    this.clearInput();
+    event.preventDefault();
   }
 
   handleTitleChange(event) {
@@ -68,7 +84,6 @@ class Editor extends Component {
 
     return (
       <div className="editor-panel">
-
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
@@ -78,14 +93,14 @@ class Editor extends Component {
               <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required/>
             </div>
             <div>
-                <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Tags seperated by a single space" />
-              </div>
+              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Multiple tags seperated by a single space" />
+            </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
             </div>
             <div>
               <button type="submit" >Save</button>
-              <button type="reset" onClick={ this.handleEditorDisplay }>Cancel</button>
+              <button type="reset" onClick={ this.cancel }>Cancel</button>
             </div>
           </form>
         </div>
