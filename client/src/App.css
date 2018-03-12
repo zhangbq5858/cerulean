@@ -74,7 +74,7 @@ header {
   
 }
 
-.editor-panel button[name=add] {
+div button[name=add] {
   margin: 4em auto;
   width: 100px;
   height: 30px;
@@ -83,7 +83,6 @@ header {
   color: black;
   font-weight: 700;
   font-family: sans-serif;
-  text-align: center;
   border: 1px solid white;
   position: absolute;
   top: 0;
