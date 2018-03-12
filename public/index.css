@@ -110,21 +110,7 @@ body {
   padding: 0%;
   box-sizing: border-box;
 }
-h4 {
-    display: block;
-    -webkit-margin-before: 1.33em;
-    -webkit-margin-after: 1.33em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    font-weight: bold;
-}
-.url-tag-header > h4 {
-    font-family: fantasy;
-    text-align: center;
-    font-size: 1.1rem;
-    color: black;
-    margin: 0 80px;
-}
+
 /*  */
 .url-content {
     display: flex;
@@ -132,6 +118,25 @@ h4 {
     justify-content: center;
     width: 80%;
     margin: 5% auto;
+}
+
+.url-content > h4 {
+    display: flex;
+    font: bold;
+    color: blueviolet;
+}
+
+.url-content > a {
+    display: inline;
+    color: black;
+
+}
+
+.url-content > p {
+    padding: 40px;
+    background-color: blanchedalmond;
+    text-decoration-color: black; 
+
 }
 .url-content > li {
     display: flex;

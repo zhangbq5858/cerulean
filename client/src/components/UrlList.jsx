@@ -15,7 +15,7 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 		return "vote";
 	}
 
-	return (
+	return (	
 		<li key={Link.id}>
 			<h4>{Link.title}</h4>
 			<a href={Link.url}>{Link.url}</a>
@@ -35,7 +35,7 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 			/>
 			<p>{Link.summary}</p>
 			<hr/>
-		</li>
+		</li>	
 	);
 };
 
