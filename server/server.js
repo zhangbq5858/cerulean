@@ -5,7 +5,7 @@ const PORT = 4000;
 
 const link = require('./link');
 const user = require('./user');
-const debug = true;
+const debug = false;
 
 app.use( express.static('../public') ); // serve any assets by their path under '/' directory (same dir as server.js)
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
@@ -37,8 +37,8 @@ app.post('/add',(req, resp) => {   // 用户给予添加内容和用户id，服�
     const Link = link.createLink(url, title, tag, summary);
     Link.vote = 0;
     LinksMap[Link.id] = Link;
-    resp.status(200);
-    resp.send(JSON.stringify(Link));
+    if(debug) console.log('/add', Link);
+    resp.send(Link);
 });
 
 app.post('/edit',(req, resp) => { // 用户
