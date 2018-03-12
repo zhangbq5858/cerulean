@@ -15,11 +15,11 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 		return "vote";
 	}
 
-	return (	
+	return (
 		<li key={Link.id}>
 			<h4>{Link.title}</h4>
 			<a href={Link.url}>{Link.url}</a>
-			<span style={{color: "green"}}> {Link.tags.map((tag) => tag+" ")} </span>
+			<span style={{color: "green"}}> {Link.tags?Link.tags.map((tag) => tag+" "):''} </span>
 			<span>vote: {Link.vote} </span>
 			<Button
 				clickFunc={clickFunc}
@@ -35,7 +35,7 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 			/>
 			<p>{Link.summary}</p>
 			<hr/>
-		</li>	
+		</li>
 	);
 };
 
