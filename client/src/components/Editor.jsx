@@ -78,9 +78,9 @@ class Editor extends Component {
               <input type="text" ref="url" value={this.state.url} onChange={this.handleURLChange} />
             </div>
             <div>
-              <label>Tags<label>
-              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} />
-            </div>
+              <label>Tags</label>
+                <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} />
+              </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
             </div>
