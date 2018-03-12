@@ -49,19 +49,22 @@ let summaryPool = [
     "Use Scholastic’s Book Wizard to level your classroom library, discover resources for the books you teach, and find books at just the right level for students with Guided Reading, Lexile® Measure, and DRA levels for children's books.",
     "aaaaaaaaaaaaaa","bbbbbbbbbbbbbb","cccccccccccccc","dddddddddddddd"];
 
-const createLink = (url, title, tags = null, summary = "summary") => {
-    console.log("createLink",url,title,tags,summary);
+const createLink = (url, title, tags = [], summary = "summary") => {
+    // console.log("createLink",url,title,tags,summary);
     let Link = {};
     Link.id = uuid++;
     Link.title = title;
     Link.url = url;
     Link.summary = summary;
-    Link.tags = tags;
+    Link.tags = !tags?tags:[];
     Link.vote = Math.floor(Math.random()*1000);
-    if(tags === null){
+    if(!tags){ // updated by Bin
         Link.tags = generateTags();
     }else{
-        Link.tags.push(tags);
+        // Link.tags.push(tags);//bug
+        for(tag of tags) {
+          Link.tags.push(tag);
+        }
     }
     return Link;
 }
