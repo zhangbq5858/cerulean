@@ -51,8 +51,10 @@ class Editor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.state.url !== nextProps.currentLink.url){
-      this.setState(nextProps.currentLink);
+    if(this.state.id !== nextProps.currentLink.id){
+      this.setState(() => nextProps.currentLink);
+      console.log(this.state);
+      console.log(nextProps.currentLink);
     }
   }
 
@@ -66,7 +68,7 @@ class Editor extends Component {
 
     return (
       <div className="editor-panel">
-        <button name="add" onClick={ this.handleEditorDisplay } > Submit </button>
+
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
