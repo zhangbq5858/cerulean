@@ -4,7 +4,7 @@ import './App.css';
 import Content from './components/Content';
 import UserID from './components/UserID';
 import Editor from './components/Editor';
-import SortBy from './components/SortBy';
+import FilterAndSortBy from './components/FilterAndSortBy';
 
 const fetchFunc = require('./FetchFunc');
 const debug = true;
@@ -27,12 +27,18 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		this.convertMapToArray = this.convertMapToArray.bind(this);
     	this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
     	this.save = this.save.bind(this);
-    	this.changeSortFunc = this.changeSortFunc.bind(this);
+			this.changeSortFunc = this.changeSortFunc.bind(this);
+			this.changeFilterFunc = this.changeFilterFunc.bind(this);
+	}
+
+	changeFilterFunc(e){
+		this.setState({ filter: e.target.innerHTML === "All" ? null : e.target.innerHTML});
 	}
 
 	changeSortFunc(e){
 		this.setState({ sort: e.target.value });
 	}
+
 
 	sortByVote (res){
 		res.sort((a,b) => {
@@ -121,7 +127,8 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		let res = [];
 		//console.log("convert map to array part, checkout data -> ", this.state.filter);
 		for(let key in this.state.linksMap){
-			if(this.state.filter === null || this.state.linksMap[key].tag.includes(this.state.filter))
+			//if(this.state.filter !== null) console.log(this.state.linksMap[key].tags,"?????",this.state.filter);
+			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter))
 				res.push(this.state.linksMap[key]);
 		}
 		if(this.state.sort === "vote"){
@@ -196,7 +203,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           handleSubmit={this.save}
           currentLink={this.state.currentLink}
         />
-        <SortBy changeSortFunc={this.changeSortFunc}/>
+        <FilterAndSortBy 
+					changeSortFunc={this.changeSortFunc}
+					changeFilterFunc={this.changeFilterFunc}
+					tagPool={this.state.tagPool}
+				/>
         <Content
         	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
