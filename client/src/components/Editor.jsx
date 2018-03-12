@@ -26,7 +26,7 @@ class Editor extends Component {
       vote: this.props.currentLink.vote,
       title:this.refs.title.value,
       text:this.refs.url.value,
-      tags:this.refs.tags.value,
+      tags:this.refs.tags.value.split(' '),
       summary:this.refs.summary.value
     }
     event.preventDefault();
