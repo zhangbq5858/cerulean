@@ -56,7 +56,7 @@ const createLink = (url, title, tags = null, summary = "summary") => {
     Link.title = title;
     Link.url = url;
     Link.summary = summary;
-    Link.tags = [];
+    Link.tags = tags;
     Link.vote = Math.floor(Math.random()*1000);
     if(tags === null){
         Link.tags = generateTags();
