@@ -12,7 +12,7 @@ const Content = ({linksToDisplay, buttonClickFunc, status, user}) => {
       content.push( <UrlList
         Link={Link}
         buttonClickFunc={buttonClickFunc}
-        userId={user.id}
+        user={user}
         />);
     }
     return content;
@@ -20,9 +20,9 @@ const Content = ({linksToDisplay, buttonClickFunc, status, user}) => {
 
   return (
     <div className="Content">
-      <ul>
+      <ol>
         {generateUrllist()}
-      </ul>
+      </ol>
     </div>
   );
 };

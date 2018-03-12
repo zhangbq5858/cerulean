@@ -70,15 +70,16 @@ class Editor extends Component {
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
-              Title  <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange}/>
+              <label>Title</label>
+              <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange}/>
             </div>
             <div>
-              <label>URL
-              </label>
+              <label>URL</label>
               <input type="text" ref="url" value={this.state.url} onChange={this.handleURLChange} />
             </div>
             <div>
-              Tags  <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} />
+              <label>Tags<label>
+              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} />
             </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
