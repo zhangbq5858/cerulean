@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 
 import Content from './components/Content';
 import UserID from './components/UserID';
-import Editor from './components/Editor'
+import Editor from './components/Editor';
+import SortBy from './components/SortBy';
 
 const fetchFunc = require('./FetchFunc');
 const debug = true;
@@ -17,13 +18,39 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
+			sort: null,
       editorVisible: false
     };
 
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
-    this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
-    this.save = this.save.bind(this);
+    	this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
+    	this.save = this.save.bind(this);
+    	this.changeSortFunc = this.changeSortFunc.bind(this);
+	}
+
+	changeSortFunc(e){
+		this.setState({ sort: e.target.value });
+	}
+
+	sortByVote (res){
+		res.sort((a,b) => {
+			return a.vote - b.vote
+		});
+	}
+
+	sortByTitle(res){
+		res.sort(function(a,b){
+			let titleA = a.title.toUpperCase();
+			let titleB = b.title.toUpperCase();
+			if(titleA < titleB){
+				return -1;
+			}
+			if(titleA > titleB){
+				return 1;
+			}
+			return 0;
+		});
 	}
 
 	buttonClickFunc = (value, linkId, userId) => {
@@ -91,6 +118,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			if(this.state.filter === null || this.state.linksMap[key].tag.includes(this.state.filter))
 				res.push(this.state.linksMap[key]);
 		}
+		if(this.state.sort === "vote"){
+			this.sortByVote(res);
+		}
+		if(this.state.sort === "title"){
+			this.sortByTitle(res);
+		}
 		return res;
 	}
 
@@ -150,6 +183,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           handleEditorDisplay={this.toggleEditorDisplay}
           handleSubmit={this.save}
         />
+        <SortBy changeSortFunc={this.changeSortFunc}/>
         <Content
         	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
