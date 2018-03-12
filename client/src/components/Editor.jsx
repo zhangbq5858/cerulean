@@ -1,32 +1,65 @@
+// created by Bin in Mar, 2018
 import React, {Component} from 'react';
 
-class Editor extends Component {
+const debug = true;
 
-  handleEditorDisplay = ()=> this.props.handleEditorDisplay();
+class Editor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {id:'', title:'', url:'',tags:'',summary:'',vote:0};
+
+    this.handleEditorDisplay = this.handleEditorDisplay.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleURLChange = this.handleURLChange.bind(this);
+    this.handleTagsChange = this.handleTagsChange.bind(this);
+    this.handleSummaryChange = this.handleSummaryChange.bind(this);
+  }
+
+  handleEditorDisplay = ()=> {
+    this.props.handleEditorDisplay();
+  }
 
   handleSubmit = (event)=>{
     const item = {
-      // id, value, titile, votes, summary, [tags]
+      id: this.props.currentLink.id,
+      vote: this.props.currentLink.vote,
       title:this.refs.title.value,
-      text:this.refs.value.value,
-      tags:this.refs.tags.value,
+      text:this.refs.url.value,
+      tags:this.refs.tags.value.split(' '),
       summary:this.refs.summary.value
     }
-    // console.log(item);
     event.preventDefault();
     this.props.handleSubmit(item);
     this.props.handleEditorDisplay();
-    this.reset();
   }
 
-  reset = ()=> {
-    this.refs.title.value = '';
-    this.refs.value.value = '';
-    this.refs.tags.value = '';
-    this.refs.summary.value = '';
+  handleTitleChange(event) {
+    this.setState({title:event.target.value});
+  }
+
+  handleURLChange(event) {
+    this.setState({url:event.target.value});
+  }
+
+  handleTagsChange (event) {
+    this.setState({tags:event.target.value});
+  }
+
+  handleSummaryChange (event) {
+    this.setState({summary:event.target.value});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.state.id !== nextProps.currentLink.id){
+      this.setState(() => nextProps.currentLink);
+      console.log(this.state);
+      console.log(nextProps.currentLink);
+    }
   }
 
   render(){
+
     let displayEditor = {
       display: this.props.editorVisible
         ? 'block'
@@ -35,27 +68,27 @@ class Editor extends Component {
 
     return (
       <div className="editor-panel">
-        <button name="add" onClick={ this.handleEditorDisplay } > Submit </button>
+
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
-              <input type="text" ref="title" placeholder="Title" required/>
+              <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
             </div>
             <div>
-              <input type="url" ref="value" placeholder="URL" required/>
+              <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required/>
             </div>
             <div>
-              <input type="text" ref="tags" placeholder="Filed" required/>
+                <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Tags seperated by a single space" />
+              </div>
+            <div>
+              <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
             </div>
             <div>
-              <textarea ref="summary" placeholder="URL Summary"></textarea>
-            </div>
-            <div>
-              <button type="submit">Save</button>
+              <button type="submit" >Save</button>
               <button type="reset" onClick={ this.handleEditorDisplay }>Cancel</button>
             </div>
-        </form>
-      </div>
+          </form>
+        </div>
     </div>) //return
   } //render
 }

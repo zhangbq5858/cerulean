@@ -18,15 +18,16 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			user: null, //用户数据
 			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
+      currentLink: {},
 			sort: null,
       editorVisible: false
     };
-
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
     	this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
     	this.save = this.save.bind(this);
     	this.changeSortFunc = this.changeSortFunc.bind(this);
+      this.startNewEntry = this.startNewEntry.bind(this);
 	}
 
 	changeSortFunc(e){
@@ -59,6 +60,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			//fetchFunc.addPostRequest();
 		}else if(value === "edit"){
 			//fetchFunc.editPostRequest();
+      this.setState({
+        currentLink:this.state.linksMap[linkId]
+        , editorVisible:true
+      });
+      // if(debug) console.log(this.state.linksMap[linkId]);
 		}else if(value === "delete"){
 			//console.log("delete key clicked");
 			fetchFunc.callDeletePostRequest(linkId)
@@ -152,7 +158,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     if(debug) console.log(url);
 
     if (url['id']) { // update
-
+      fetchFunc.callEditPostRequest(url)
+      .then(link => {
+        let temp = this.state.linksMap;
+        temp[link.id] = link;
+        this.setState({linksMap: temp});
+      })
     } else { // create
       fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
       .then(link => {
@@ -172,16 +183,26 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     this.setState({editorVisible: tempVisibility}); //setState
   } //toggleAddDisplay
 
+  startNewEntry() {
+    this.setState({
+      currentLink:{id:'', title:'', url:'',tags:'',summary:'',vote:0}
+      , editorVisible:true
+    });
+  }
+
+
   render() {
 	//	console.log("check data part -> ",this.state.user);
     return (
       <div>
         <header className="page-title">SurfVibes</header>
         <UserID user={this.state.user}/>
+        <button name="add" onClick={ this.startNewEntry } > Submit </button>
         <Editor
           editorVisible={this.state.editorVisible}
           handleEditorDisplay={this.toggleEditorDisplay}
           handleSubmit={this.save}
+          currentLink={this.state.currentLink}
         />
         <SortBy changeSortFunc={this.changeSortFunc}/>
         <Content
