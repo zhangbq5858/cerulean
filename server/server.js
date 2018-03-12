@@ -33,11 +33,10 @@ app.post('/add',(req, resp) => {   // 用户给予添加内容和用户id，服�
     const title = req.body.title;
     const url = req.body.url;
     const tag = req.body.tag;
-    const summary = req.body.summray;
+    const summary = req.body.summary;
     const Link = link.createLink(url, title, tag, summary);
     Link.vote = 0;
     LinksMap[Link.id] = Link;
-    if(debug) console.log('Saved '+ Link);
     resp.status(200);
     resp.send(JSON.stringify(Link));
 });

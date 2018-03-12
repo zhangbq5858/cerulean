@@ -9,17 +9,19 @@ let titlePool = ["Paper review. IPFS: Content addressed, versioned, P2P file sys
 "I've Just Launched \"Pwned Passwords\" V2 With Half a Billion Passwords for Download",
 "The Great Puri.sm Outage of 2018","Why Self-Taught Artificial Intelligence Has Trouble With the Real World"];
 
-const createLink = (url, title, tags, summary) => {
+const createLink = (url, title, tags = null, summary = "summary") => {
+    console.log("createLink",url,title,tags,summary);
     let Link = {};
     Link.id = uuid++;
     Link.title = title;
     Link.url = url;
-    Link.summary = 'summary';
+    Link.summary = summary;
+    Link.tags = [];
     Link.vote = Math.floor(Math.random()*1000);
-    if(typeof(tags) === "undefined"){
+    if(tags === null){
         Link.tags = generateTags();
     }else{
-        Link.tags = tags;
+        Link.tags.push(tags);
     }
     return Link;
 }
