@@ -26,7 +26,7 @@ class Editor extends Component {
       vote: this.props.currentLink.vote,
       title:this.refs.title.value,
       text:this.refs.url.value,
-      tags:this.refs.tags.value,
+      tags:this.refs.tags.value.split(' '),
       summary:this.refs.summary.value
     }
     event.preventDefault();
@@ -51,8 +51,10 @@ class Editor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.state.url !== nextProps.currentLink.url){
-      this.setState(nextProps.currentLink);
+    if(this.state.id !== nextProps.currentLink.id){
+      this.setState(() => nextProps.currentLink);
+      console.log(this.state);
+      console.log(nextProps.currentLink);
     }
   }
 
@@ -66,20 +68,17 @@ class Editor extends Component {
 
     return (
       <div className="editor-panel">
-        <button name="add" onClick={ this.handleEditorDisplay } > Submit </button>
+
         <div className="editor-body" style={displayEditor}>
           <form className="editor-form" onSubmit={this.handleSubmit} >
             <div>
-              <label>Title</label>
-              <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange}/>
+              <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
             </div>
             <div>
-              <label>URL</label>
-              <input type="text" ref="url" value={this.state.url} onChange={this.handleURLChange} />
+              <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required/>
             </div>
             <div>
-              <label>Tags</label>
-                <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} />
+                <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Tags seperated by a single space" />
               </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
