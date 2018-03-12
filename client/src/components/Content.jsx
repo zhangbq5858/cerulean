@@ -20,9 +20,9 @@ const Content = ({linksToDisplay, buttonClickFunc, status, user}) => {
 
   return (
     <div className="Content">
-      <ul>
+      <ol>
         {generateUrllist()}
-      </ul>
+      </ol>
     </div>
   );
 };
