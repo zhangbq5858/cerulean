@@ -7,7 +7,7 @@ import Editor from './components/Editor';
 import FilterAndSortBy from './components/FilterAndSortBy';
 
 const fetchFunc = require('./FetchFunc');
-const debug = true;
+const debug = false;
 
 class App extends Component { // 三部分 一部分 submit，一部分 过滤 一部分 content
   constructor(props){
@@ -30,9 +30,9 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			this.changeFilterFunc = this.changeFilterFunc.bind(this);
       this.startNewEntry = this.startNewEntry.bind(this);
 	}
-  
+
 	changeFilterFunc(e){
-		this.setState({ filter: e.target.innerHTML === "All" ? null : e.target.innerHTML});      
+		this.setState({ filter: e.target.innerHTML === "All" ? null : e.target.innerHTML});
 	}
 
 	changeSortFunc(e){
@@ -167,10 +167,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     if (url['id']) { // update
       fetchFunc.callEditPostRequest(url)
       .then(link => {
-        let temp = this.state.linksMap;
-        temp[link.id] = link;
-        this.setState({linksMap: temp});
-      })
+        const linksMap = Object.assign({}, this.state.linksMap);
+        linksMap[link.id] = link;
+        this.setState({linksMap});
+      });
+
     } else { // create
       fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
       .then(link => {
@@ -192,7 +193,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
   startNewEntry() {
     this.setState({
-      currentLink:{id:'', title:'', url:'',tags:'',summary:'',vote:0}
+      currentLink:{id:'', title:'', url:'',tags:[] ,summary:'', vote:0}
       , editorVisible:true
     });
   }
@@ -206,12 +207,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
         <UserID user={this.state.user}/>
         <button name="add" onClick={ this.startNewEntry } > Submit </button>
         <Editor
+          currentLink={this.state.currentLink}
           editorVisible={this.state.editorVisible}
           handleEditorDisplay={this.toggleEditorDisplay}
           handleSubmit={this.save}
-          currentLink={this.state.currentLink}
         />
-        <FilterAndSortBy 
+        <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}
 					changeFilterFunc={this.changeFilterFunc}
 					tagPool={this.state.tagPool}
