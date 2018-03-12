@@ -22,12 +22,12 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			sort: null,
       editorVisible: false
     };
-//{id:'', title:'', url:'',tags:'',summary:'',vote:0}
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
     	this.toggleEditorDisplay = this.toggleEditorDisplay.bind(this);
     	this.save = this.save.bind(this);
     	this.changeSortFunc = this.changeSortFunc.bind(this);
+      this.startNewEntry = this.startNewEntry.bind(this);
 	}
 
 	changeSortFunc(e){
@@ -183,6 +183,13 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     this.setState({editorVisible: tempVisibility}); //setState
   } //toggleAddDisplay
 
+  startNewEntry() {
+    this.setState({
+      currentLink:{id:'', title:'', url:'',tags:'',summary:'',vote:0}
+      , editorVisible:true
+    });
+  }
+
 
   render() {
 	//	console.log("check data part -> ",this.state.user);
@@ -190,6 +197,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
       <div>
         <header className="page-title">SurfVibes</header>
         <UserID user={this.state.user}/>
+        <button name="add" onClick={ this.startNewEntry } > Submit </button>
         <Editor
           editorVisible={this.state.editorVisible}
           handleEditorDisplay={this.toggleEditorDisplay}
