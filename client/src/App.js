@@ -164,14 +164,15 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     //id, title, url, tag, summary
     if(debug) console.log(url);
 
-    if (url['id']) { // update
+    if (url.id) { // update
       fetchFunc.callEditPostRequest(url)
       .then(link => {
-        const linksMap = Object.assign({}, this.state.linksMap);
-        linksMap[link.id] = link;
-        this.setState({linksMap});
-      });
-
+        if(debug) console.log(link);
+        let temp = this.state.linksMap;
+        temp[link.id] = link;
+        this.setState({linksMap: temp});
+      })
+      .catch(error => console.log('Failed to update '+ url));
     } else { // create
       fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
       .then(link => {
@@ -183,7 +184,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
       .catch(error => console.log('Failed to save '+ url));
     }
 
-    if(debug) console.log(this.state.linksMap);
+    if(debug) console.log(this.state.linksMap[url.id]);
   }
 
   toggleEditorDisplay() {
@@ -193,7 +194,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
   startNewEntry() {
     this.setState({
-      currentLink:{id:'', title:'', url:'',tags:[] ,summary:'', vote:0}
+      currentLink:{id:'', title:'', url:'',tags:'',summary:'', vote:0}
       , editorVisible:true
     });
   }

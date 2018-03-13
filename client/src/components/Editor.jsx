@@ -6,7 +6,7 @@ const debug = false;
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = {id:'', title:'', url:'',tags:[] ,summary:'',vote:0};
+    this.state = {id:'', title:'', url:'',tags:'' ,summary:'',vote:0};
 
     this.handleEditorDisplay = this.handleEditorDisplay.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,7 +19,7 @@ class Editor extends Component {
   }
 
   clearInput(){
-    this.setState({id:'', title:'', url:'',tags:[] ,summary:'',vote:0});
+    this.setState({id:'', title:'', url:'',tags:'' ,summary:'',vote:0});
   }
 
   handleEditorDisplay = ()=> {
@@ -34,7 +34,7 @@ class Editor extends Component {
   handleSubmit = (event)=>{
     let tags = [];
     if(this.refs.tags.value){
-      tags = this.refs.tags.value.split(' ');
+      tags = this.refs.tags.value.split(',');
     }
     const item = {
       id: this.props.currentLink.id,
@@ -91,7 +91,7 @@ class Editor extends Component {
               <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required/>
             </div>
             <div>
-              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Multiple tags seperated by a single space" />
+              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Multiple tags seperated by a single comma" />
             </div>
             <div>
               <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
