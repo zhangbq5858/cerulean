@@ -38,18 +38,31 @@ app.post('/add',(req, resp) => {   // 用户给予添加内容和用户id，服�
     Link.vote = 0;
     LinksMap[Link.id] = Link;
     if(debug) console.log('/add', Link);
-    resp.send(Link);
+    resp.send(JSON.stringify(Link));
 });
 
 app.post('/edit',(req, resp) => { // 用户
+  if(debug) console.log(req.body);
     const id = req.body.id;
     let Link = LinksMap[id] ;
     Link.title = req.body.title;
-    Link.tag = req.body.tag;
+    Link.url = req.body.text; //bugfix
+    Link.tag = req.body.tags; //bugfix
+    Link.tags = req.body.tags; //bugfix - still has bugs
     Link.summary = req.body.summary;
     LinksMap[id] = Link;
+    if(debug) console.log(Link);
     resp.send(JSON.stringify(Link));
 });
+
+// body:
+//    { id: 13,
+//      vote: 252,
+//      title: 'Best chinese food Seattle, WA - Yelp',
+//      text: 'https://www.yelp.com/',
+//      tags: [ 'Entertainment,Sports' ],
+//      summary: 'Reviews on Best chinese food in Seattle, WA - Zheng Cafe, A + Hong Kong Kitchen, Harbor City Restaurant, Magic Dragon, Sichuanese Cuisine, Fu Shen, Red Lantern, Xi\'an Noodles, Din Tai Fung, Chef Liao Asian Fusion Cuisine' },
+
 
 app.post('/delete',(req, resp) => {
     const linkId = req.body.linkId;
