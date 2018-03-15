@@ -28,7 +28,6 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     	this.save = this.save.bind(this);
 			this.changeSortFunc = this.changeSortFunc.bind(this);
 			this.changeFilterFunc = this.changeFilterFunc.bind(this);
-      this.startNewEntry = this.startNewEntry.bind(this);
 	}
 
 	changeFilterFunc(e){
@@ -68,7 +67,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			//fetchFunc.editPostRequest();
       this.setState({
         currentLink:this.state.linksMap[linkId]
-        , editorVisible:true
+        , editorVisible: true
       });
       // if(debug) console.log(this.state.linksMap[linkId]);
 		}else if(value === "delete"){
@@ -164,41 +163,38 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     //id, title, url, tag, summary
     if(debug) console.log(url);
 
+    if(!url) {
+      this.setState({editorVisible: !this.state.editorVisible, currentLink:{}});
+      return ;
+    }
+
     if (url.id) { // update
       fetchFunc.callEditPostRequest(url)
       .then(link => {
         if(debug) console.log(link);
-        let temp = this.state.linksMap;
-        temp[link.id] = link;
-        this.setState({linksMap: temp});
+        const linksMap = Object.assign({}, this.state.linksMap);
+        linksMap[url.id] = link;
+        this.setState({linksMap, editorVisible: !this.state.editorVisible});
+        if(debug) console.log(this.setState.linksMap.id);
       })
-      .catch(error => console.log('Failed to update '+ url));
+      .catch(error => console.log('Failed to update:', url));
     } else { // create
-      fetchFunc.callAddPostRequest(url['title'], url['text'], url['tags'], url['summary'])
+      fetchFunc.callAddPostRequest(url['title'], url['url'], url['tags'], url['summary'])
       .then(link => {
         if(debug) console.log(link);
         let temp = this.state.linksMap;
         temp[link.id] = link;
-        this.setState({linksMap: temp});
+        this.setState({linksMap: temp,editorVisible: !this.state.editorVisible});
       })
-      .catch(error => console.log('Failed to save '+ url));
+      .catch(error => console.log('Failed to save ', url));
     }
-
-    if(debug) console.log(this.state.linksMap[url.id]);
   }
 
   toggleEditorDisplay() {
-    const tempVisibility = !this.state.editorVisible;
-    this.setState({editorVisible: tempVisibility}); //setState
-  } //toggleAddDisplay
-
-  startNewEntry() {
     this.setState({
-      currentLink:{id:'', title:'', url:'',tags:'',summary:'', vote:0}
-      , editorVisible:true
-    });
-  }
-
+      editorVisible: !this.state.editorVisible
+    }); //setState
+  } //toggleAddDisplay
 
   render() {
 	//	console.log("check data part -> ",this.state.user);
@@ -206,12 +202,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
       <div>
         <header className="page-title">SurfVibes</header>
         <UserID user={this.state.user}/>
-        <button name="add" onClick={ this.startNewEntry } > Submit </button>
+        <button name="add" onClick={ this.toggleEditorDisplay } > {this.state.editorVisible? 'Save Later': 'Submit'} </button>
         <Editor
-          currentLink={this.state.currentLink}
-          editorVisible={this.state.editorVisible}
-          handleEditorDisplay={this.toggleEditorDisplay}
-          handleSubmit={this.save}
+          visible = {this.state.editorVisible}
+          current = {this.state.currentLink}
+          handleSubmit = { this.save }
         />
         <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}

@@ -42,16 +42,15 @@ app.post('/add',(req, resp) => {   // 用户给予添加内容和用户id，服�
 });
 
 app.post('/edit',(req, resp) => { // 用户
-  if(debug) console.log(req.body);
     const id = req.body.id;
     let Link = LinksMap[id] ;
     Link.title = req.body.title;
-    Link.url = req.body.text; //bugfix
-    Link.tag = req.body.tags; //bugfix
+    Link.url = req.body.url; //bugfix
+    // Link.tag = req.body.tags; //bugfix
     Link.tags = req.body.tags; //bugfix - still has bugs
     Link.summary = req.body.summary;
     LinksMap[id] = Link;
-    if(debug) console.log(Link);
+    if(debug) console.log('Finished /edit', Link);
     resp.send(JSON.stringify(Link));
 });
 

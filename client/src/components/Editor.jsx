@@ -1,14 +1,17 @@
-// created by Bin in Mar, 2018
+// v2.0 created by Bin in Mar, 2018
 import React, {Component} from 'react';
-
-const debug = false;
-
 class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = {id:'', title:'', url:'',tags:'' ,summary:'',vote:0};
+    this.state = {
+      id: '',
+      title: '',
+      url: '',
+      tags: [],
+      summary: '',
+      vote: 0
+    };
 
-    this.handleEditorDisplay = this.handleEditorDisplay.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleURLChange = this.handleURLChange.bind(this);
@@ -18,90 +21,99 @@ class Editor extends Component {
     this.cancel = this.cancel.bind(this);
   }
 
-  clearInput(){
-    this.setState({id:'', title:'', url:'',tags:'' ,summary:'',vote:0});
+  clearInput() {
+    this.setState({
+      id: '',
+      title: '',
+      url: '',
+      tags: [],
+      summary: '',
+      vote: 0
+    });
   }
 
-  handleEditorDisplay = ()=> {
-    this.props.handleEditorDisplay();
+  cancel() {
+    this.handleSubmit(null);
   }
 
-  cancel(){
-    this.props.handleEditorDisplay();
+  handleSubmit = (event) => {
     this.clearInput();
-  }
-
-  handleSubmit = (event)=>{
     let tags = [];
-    if(this.refs.tags.value){
-      tags = this.refs.tags.value.split(',');
+    if(!event) {
+      this.props.handleSubmit(null);
+      return;
+    }
+    if (this.refs.tags.value) {
+      const regex = /\s*,\s*/; // 0 or more spaces followed by a comma followed by 0 or more spaces
+      tags = this.refs.tags.value.split(regex);
     }
     const item = {
-      id: this.props.currentLink.id,
-      vote: this.props.currentLink.vote,
-      title:this.refs.title.value,
-      text:this.refs.url.value,
-      tags:tags,
-      summary:this.refs.summary.value
+      id: this.state.id,
+      vote: this.state.vote,
+      title: this.state.title,
+      url: this.state.url,
+      tags: tags,
+      summary: this.state.summary
     }
     this.props.handleSubmit(item);
-    this.props.handleEditorDisplay();
-    this.clearInput();
     event.preventDefault();
   }
 
   handleTitleChange(event) {
-    this.setState({title:event.target.value});
+    this.setState({title: event.target.value});
   }
 
   handleURLChange(event) {
-    this.setState({url:event.target.value});
+    this.setState({url: event.target.value});
   }
 
-  handleTagsChange (event) {
-    this.setState({tags:event.target.value});
+  handleTagsChange(event) {
+    this.setState({tags: event.target.value});
   }
 
-  handleSummaryChange (event) {
-    this.setState({summary:event.target.value});
+  handleSummaryChange(event) {
+    this.setState({summary: event.target.value});
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.state.id !== nextProps.currentLink.id){
-      this.setState(() => nextProps.currentLink);
+    if(!this.isIdentical(nextProps.current)){
+      this.setState(() => nextProps.current);
     }
   }
 
-  render(){
+  isIdentical(entry) {
+    return this.state.id === entry.id && this.state.title === entry.title && this.state.url === entry.url && this.state.tags === entry.tags && this.state.vote === entry.vote;
+  }
 
-    let displayEditor = {
-      display: this.props.editorVisible
+  render() {
+
+    let visible = {
+      display: this.props.visible
         ? 'block'
         : 'none'
     };
 
-    return (
-      <div className="editor-panel">
-        <div className="editor-body" style={displayEditor}>
-          <form className="editor-form" onSubmit={this.handleSubmit} >
-            <div>
-              <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required/>
-            </div>
-            <div>
-              <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required/>
-            </div>
-            <div>
-              <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Multiple tags seperated by a single comma" />
-            </div>
-            <div>
-              <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} />
-            </div>
-            <div>
-              <button type="submit" >Save</button>
-              <button type="reset" onClick={ this.cancel }>Cancel</button>
-            </div>
-          </form>
-        </div>
+    return (<div className="editor-panel">
+      <div className="editor-body" style={visible} >
+        <form className="editor-form" onSubmit={this.handleSubmit}>
+          <div>
+            <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required="required"/>
+          </div>
+          <div>
+            <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required="required"/>
+          </div>
+          <div>
+            <input type="text" ref="tags" value={this.state.tags} onChange={this.handleTagsChange} placeholder="Multiple tags seperated by a comma"/>
+          </div>
+          <div>
+            <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange}/>
+          </div>
+          <div>
+            <button type="submit">Save</button>
+            <button type="reset" onClick={this.cancel}>Cancel</button>
+          </div>
+        </form>
+      </div>
     </div>) //return
   } //render
 }
