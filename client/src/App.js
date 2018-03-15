@@ -127,7 +127,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		//console.log("convert map to array part, checkout data -> ", this.state.filter);
 		for(let key in this.state.linksMap){
 			//if(this.state.filter !== null) console.log(this.state.linksMap[key].tags,"?????",this.state.filter);
-			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter))
+			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter.toLowerCase()))
 				res.push(this.state.linksMap[key]);
 		}
 		if(this.state.sort === "vote"){
