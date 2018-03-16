@@ -15,10 +15,17 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 		return "vote";
 	}
 
+	const shortUrl = (url) => {
+		if(url.length > 50){
+			return url.slice(0,47) + "...";
+		}
+		return url;
+	}
+
 	return (
 		<li key={Link.id}>
 			<h4>{Link.title}</h4>
-			<a href={Link.url}>{Link.url}</a>
+			<a href={Link.url}>{shortUrl(Link.url)}</a>
 			<span style={{color: "green"}}> {Link.tags?Link.tags.map((tag) => tag+" "):''} </span>
 			<span>vote: {Link.vote} </span>
 			<Button

@@ -7,7 +7,7 @@ import Editor from './components/Editor';
 import FilterAndSortBy from './components/FilterAndSortBy';
 
 const fetchFunc = require('./FetchFunc');
-const debug = false;
+const debug = true;
 
 class App extends Component { // 三部分 一部分 submit，一部分 过滤 一部分 content
   constructor(props){
@@ -61,9 +61,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
 	buttonClickFunc = (value, linkId, userId) => {
 
-		if(value === "add"){
-			//fetchFunc.addPostRequest();
-		}else if(value === "edit"){
+		if(value === "edit"){
 			//fetchFunc.editPostRequest();
       this.setState({
         currentLink:this.state.linksMap[linkId]
@@ -83,8 +81,6 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			.catch(error => {
 				console.log("delete part's error is -> ", error);
 			});
-		}else if (value === "save"){
-
 		}else if(value === "vote"){
 			fetchFunc.postVoteRequest(linkId,userId)
 			.then(fromJson =>{
@@ -127,7 +123,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		//console.log("convert map to array part, checkout data -> ", this.state.filter);
 		for(let key in this.state.linksMap){
 			//if(this.state.filter !== null) console.log(this.state.linksMap[key].tags,"?????",this.state.filter);
-			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter.toLowerCase()))
+			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter))
 				res.push(this.state.linksMap[key]);
 		}
 		if(this.state.sort === "vote"){
@@ -142,17 +138,13 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	componentDidMount() {
 		fetchFunc.callGetDataRequest()
 		.then(fromJson => {
-			console.log("getdata part's data is -> ", fromJson.user, this.state.status);
+		//	console.log("getdata part's data is -> ", fromJson.user, this.state.status);
 			this.setState({
 				linksMap: fromJson.linksMap,
-				//linksToDisplay: this.convertMapToArray(),
 				tagPool:fromJson.tagPool,
 				user: fromJson.user,
 			});
 		})
-		// .then( () => {
-		// 	console.log("check data part -> ",this.state.user);
-		// })
 		.catch(error => {
 			//console.log("getdata part's error is -> ", error);
 		});
@@ -161,7 +153,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
   // Editor by Bin
   save(url) {
     //id, title, url, tag, summary
-    if(debug) console.log(url);
+    if(debug) console.log("add part",url);
 
     if(!url) {
       this.setState({editorVisible: !this.state.editorVisible, currentLink:{}});
@@ -207,6 +199,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           visible = {this.state.editorVisible}
           current = {this.state.currentLink}
           handleSubmit = { this.save }
+					tagPool = {this.state.tagPool}
         />
         <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}
