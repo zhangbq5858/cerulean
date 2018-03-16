@@ -28,16 +28,16 @@ class Editor extends Component {
 
 
   checkboxItemOnClick = (e) => {
-
-    if(e.target.checked && !this.state.tags.includes(e.target.value)){
+    console.log("before click item", this.state.tags);
+    if(e.target.checked && !this.state.tags.includes(e.target.id)){
         this.setState({
-            tags: [...this.state.tags, e.target.value],
+            tags: [...this.state.tags, e.target.id],
         });
         return;
     }
-    if(!e.target.checked && this.state.tags.includes(e.target.value)){
+    if(!e.target.checked && this.state.tags.includes(e.target.id)){
         this.setState({
-            tags: this.state.tags.filter((item, index) => item !== e.target.value),
+            tags: this.state.tags.filter((item, index) => item !== e.target.id),
         });
         return;
     }
@@ -62,21 +62,20 @@ class Editor extends Component {
 
   handleSubmit = (event) => {
     this.clearInput();
-    let tags = [];
     if(!event) {
       this.props.handleSubmit(null);
       return;
     }
-    if (this.refs.tags.value) {
-      const regex = /\s*,\s*/; // 0 or more spaces followed by a comma followed by 0 or more spaces
-      tags = this.refs.tags.value.split(regex);
-    }
+    // if (this.refs.tags.value) {
+    //   const regex = /\s*,\s*/; // 0 or more spaces followed by a comma followed by 0 or more spaces
+    //   tags = this.refs.tags.value.split(regex);
+    // }
     const item = {
       id: this.state.id,
       vote: this.state.vote,
       title: this.state.title,
       url: this.state.url,
-      tags: tags,
+      tags: this.state.tags,
       summary: this.state.summary
     }
     this.props.handleSubmit(item);
@@ -117,6 +116,10 @@ class Editor extends Component {
         : 'none'
     };
 
+    let disable = {
+      display: this.state.url ? 'false' : 'disabled'
+    };
+
     return (
     <div className="editor-panel">
       <div className="editor-body" style={visible} >
@@ -125,16 +128,17 @@ class Editor extends Component {
             <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required="required"/>
           </div>
           <div>
-            <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required="required"/>
+            <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required="required" disabled={disable}/>
           </div>
           <div>
             <ComboSelectTags 
               tagPool={this.props.tagPool}
               checkboxItemOnClick={this.checkboxItemOnClick}
+              tags={this.state.tags}
             />
           </div>
           <div>
-            <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange}/>
+            <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} maxLength={240}/>
           </div>
           <div>
             <button type="submit">Save</button>

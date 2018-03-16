@@ -63,7 +63,7 @@ const createLink = (url, title, tags = [], summary = "summary") => {
     }else{
         // Link.tags.push(tags);//bug
         for(tag of tags) {
-          Link.tags.push(tag.toLowerCase());
+          Link.tags.push(tag);
         }
     }
     return Link;
@@ -73,7 +73,7 @@ const generateTags = () => {
     let tag = [];
     for(let i = 0; i < tagPool.length; i++){
         if(Math.random() <= 0.2){
-            tag.push(tagPool[i].toLowerCase());
+            tag.push(tagPool[i]);
         }
     }
     return tag;
