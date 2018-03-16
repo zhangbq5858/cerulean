@@ -207,6 +207,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           visible = {this.state.editorVisible}
           current = {this.state.currentLink}
           handleSubmit = { this.save }
+					tagPool = {this.state.tagPool}
         />
         <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}
