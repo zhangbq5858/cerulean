@@ -115,11 +115,8 @@ class Editor extends Component {
         ? 'block'
         : 'none'
     };
-
-    let disable = {
-      display: this.state.url ? 'false' : 'disabled'
-    };
-
+    let disable = 
+      this.props.current === null ? true :false;
     return (
     <div className="editor-panel">
       <div className="editor-body" style={visible} >
@@ -128,7 +125,8 @@ class Editor extends Component {
             <input type="text" ref="title" value={this.state.title} onChange={this.handleTitleChange} placeholder="Title" required="required"/>
           </div>
           <div>
-            <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required="required" disabled={disable}/>
+            <input type="url" ref="url" value={this.state.url} onChange={this.handleURLChange} placeholder="URL" required="required" disabled
+            ={disable}/>
           </div>
           <div>
             <ComboSelectTags 
