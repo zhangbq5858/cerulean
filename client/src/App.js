@@ -5,6 +5,7 @@ import Content from './components/Content';
 import UserID from './components/UserID';
 import Editor from './components/Editor';
 import FilterAndSortBy from './components/FilterAndSortBy';
+import Search from './components/Search';
 
 const fetchFunc = require('./FetchFunc');
 const debug = false;
@@ -20,6 +21,8 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			filter: null,
       currentLink: {},
 			sort: null,
+			searchInput: '',
+			search: '',
       editorVisible: false
     };
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
@@ -28,6 +31,8 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
     	this.save = this.save.bind(this);
 			this.changeSortFunc = this.changeSortFunc.bind(this);
 			this.changeFilterFunc = this.changeFilterFunc.bind(this);
+			this.changeSearchFunc = this.changeSearchFunc.bind(this);
+			this.clickSearchFunc = this.clickSearchFunc.bind(this);
 	}
 
 	changeFilterFunc(e){
@@ -38,6 +43,25 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		this.setState({ sort: e.target.value });
 	}
 
+	changeSearchFunc(e){
+		this.setState({ searchInput: e.target.value });
+	}
+
+	clickSearchFunc(e){
+		this.setState({ search: this.state.searchInput });
+	}
+
+	search(res){
+		let tmp = [];
+		let search = this.state.search;
+		for (  let link of res ){
+			if((link.title.toLowerCase().indexOf(search)!==-1)||
+				(link.summary.toLowerCase().indexOf(search)!==-1)){
+					tmp.push(link);
+			}
+		}
+		return tmp;
+	}
 
 	sortByVote (res){
 		res.sort((a,b) => {
@@ -130,6 +154,9 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			if(this.state.filter === null || this.state.linksMap[key].tags.includes(this.state.filter.toLowerCase()))
 				res.push(this.state.linksMap[key]);
 		}
+		if(this.state.search !== ''){
+			res = this.search(res);
+		}
 		if(this.state.sort === "vote"){
 			this.sortByVote(res);
 		}
@@ -208,6 +235,10 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           current = {this.state.currentLink}
           handleSubmit = { this.save }
         />
+        <Search 
+        	changeSearch={this.changeSearchFunc}
+        	clickSearch={this.clickSearchFunc}
+        	/>
         <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}
 					changeFilterFunc={this.changeFilterFunc}
