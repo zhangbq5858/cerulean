@@ -39,6 +39,7 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 				text={"edit"}
 			/>
 			<Button
+			
 				clickFunc={clickFunc}
 				text={"delete"}
 			/>
