@@ -52,6 +52,9 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 
 	changeSearchFunc(e){
 		this.setState({ searchInput: e.target.value });
+		if( e.target.value === ''){
+			this.setState({ search: '' });
+		}
 	}
 
 	clickSearchFunc(e){
