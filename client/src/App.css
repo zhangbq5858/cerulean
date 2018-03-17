@@ -17,19 +17,14 @@ header {
   margin: 30px;
 }
 
+/* User name display */
 .userid-show {
-  -webkit-user-select: none;
-  /* Chrome/Safari */
+  -webkit-user-select: none; /* Chrome/Safari */
 
-  -moz-user-select: none;
-  /* Firefox */
+  -moz-user-select: none; /* Firefox */
 
-  -ms-user-select: none;
-  /* IE10+ */
+  -ms-user-select: none; /* IE10+ */
 
-  /* margin: 4em auto;
-  width: 100px;
-  height: 30px; */
   line-height: 50px;
   color: yellow;
   text-shadow: 2px 2px 8px palevioletred;
@@ -42,6 +37,7 @@ header {
   left: 20px;
 
 }
+/* Tag filters */
 .filter-sortBy {
   margin-top: 30px;
 }
@@ -80,7 +76,7 @@ header {
   box-shadow: 0px 15 px 20px palevioletred;
 }
 
-
+/* Search box */
 div .search {
   text-align: center;
 }
@@ -101,6 +97,7 @@ div .search-button {
   border-radius: 45px;
 
 }
+/* Add new URL*/
 .editor-form label {
   font-family: Arial, Helvetica, sans-serif;
   text-align: left;
@@ -155,10 +152,12 @@ div button[name=add]:hover {
 }
 
 .editor-panel button[type=submit] {
-  background-color: pink;
+  background-color: rgb(245, 145, 161);
   cursor: pointer;
   margin-right:20px;
-  height: 30px;
+  padding: 10px 10px;
+  width: 60px;
+  border-radius: 45px;
 }
 .editor-panel button[type=submit]:hover {
   background-color: blanchedalmond;
@@ -166,9 +165,11 @@ div button[name=add]:hover {
   color: palevioletred;
 }
 .editor-panel button[type=reset] {
-  background-color: pink;
+  background-color: rgb(245, 145, 161);
   cursor: pointer;
-  height: 30px;
+  padding: 10px 10px;
+  width: 60px;
+  border-radius: 45px;
 }
 .editor-panel button[type=reset]:hover {
   background-color: blanchedalmond;
@@ -176,33 +177,20 @@ div button[name=add]:hover {
   color: palevioletred;
 }
 
-
-.Content button {
-  background-color: powderblue;
-  cursor: pointer;
-}
-
-.Content p {
-  padding: 20px;
-  border: 5px solid navajowhite;
-  background-color: palegoldenrod;
-}
-
-
-/* tags comboCheckbox part */
+/* Select tags dropdown menu*/
 
 .selectBox {
   text-align: center;
   margin-bottom: 10px;
 }
 
-form .select-form {
+div .select-form {
   width: 50%;
-  display:inline-block;
-  vertical-align: middle;
+  display: inline-block;
+  text-align: center;
 }
 
-.selectBox > select {
+.selectBox>select {
   background-color: rgb(252, 229, 188);
   position: relative;
 }
@@ -221,7 +209,6 @@ form .select-form {
   background-color: navajowhite;
 }
 
-
 .selectBox select {
   width: 100%;
   font-weight: bold;
@@ -234,3 +221,39 @@ form .select-form {
 #checkboxes label:hover {
   background-color: #1e90ff;
 }
+
+/* URL display area*/
+.Content button {
+  background-color: powderblue;
+  cursor: pointer;
+}
+
+.Content p {
+  padding: 20px;
+  border: 5px solid navajowhite;
+  background-color: palegoldenrod;
+}
+
+
+/* Pagination*/
+
+.page-button {
+  text-align: center;
+}
+
+.page-button > input {
+  background-color: rgb(252, 229, 188);
+  text-align: center;
+  height: 20px;
+  width: 30px;
+}
+
+.page-button > button {
+  background-color: dodgerblue;
+  color: yellow;
+  border-radius: 45px;
+  margin-right: 10px;
+  margin-left:10px;
+
+}
+
