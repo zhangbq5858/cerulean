@@ -8,6 +8,7 @@ const PageController = ({  currentPage, totalPage, prePage, nextPage, setPage}) 
     if(event.key === "Enter") {
       if(debug) console.log("jump", event.target.value);
       setPage(event.target.value);
+      event.target.value = "";
     }
   }
 

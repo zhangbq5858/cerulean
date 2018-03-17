@@ -75,7 +75,7 @@ const createLink = (url, title, tags = [], summary = "summary") => {
 const generateTags = () => {
     let tag = [];
     for(let i = 0; i < tagPool.length; i++){
-        if(Math.random() <= 0.2){
+        if(Math.random() <= 0.4){
             tag.push(tagPool[i]);
         }
     }
