@@ -115,7 +115,8 @@ class Editor extends Component {
         ? 'block'
         : 'none'
     };
-    let disable = this.props.current === null ? true :false;
+    let disable = Object.keys(this.props.current).length === 0 ? false : true;
+    //console.log("edit url", disable, Object.keys(this.props.current).length);
     const summaryShowLength = 240;
     return (
     <div className="editor-panel">

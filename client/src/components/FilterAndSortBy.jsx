@@ -10,12 +10,12 @@ const FilterAndSortBy = ({ changeSortFunc , changeFilterFunc, tagPool}) => {
         if(tagPool === null) return []; 
         let content = [];
         for(let tag of tagPool){
-          content.push( <Filter
+          content.push( <Filter key={tag}
             changeFilterFunc={changeFilterFunc}
             text={tag}
             />);
         }
-        content.push( <Filter
+        content.push( <Filter key="All"
             changeFilterFunc={changeFilterFunc}
             text={"All"}
             />)
