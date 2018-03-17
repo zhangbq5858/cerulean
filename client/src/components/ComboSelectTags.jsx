@@ -46,8 +46,7 @@ class ComboSelectTags extends Component { // two props  tagPool, checkboxItemOnC
           };
         //	console.log("check data part -> ",this.state.user);
         return (
-            <div>
-                <div className="multiselect">
+            <form className="select-form">
                 <div className="selectBox" onClick={this.showCheckboxes}>
                     <select>
                         <option>Select tags</option>
@@ -57,8 +56,7 @@ class ComboSelectTags extends Component { // two props  tagPool, checkboxItemOnC
                 <div id="checkboxes" style={visible}>
                     {this.generagteCheckboxItem()}
                 </div>
-                </div>
-            </div>
+            </form>
         );
     }
 }
