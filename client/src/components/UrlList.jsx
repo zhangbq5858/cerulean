@@ -25,7 +25,7 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 	}
 
 	return (
-		<li key={Link.id}>
+		<li>
 			<h4>{Link.title}</h4>
 			<a href={Link.url}>{shortUrl(Link.url)}</a>
 			<span style={{color: "green"}}> {Link.tags?Link.tags.map((tag) => tag+" "):''} </span>

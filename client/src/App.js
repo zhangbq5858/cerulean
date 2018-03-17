@@ -8,7 +8,7 @@ import FilterAndSortBy from './components/FilterAndSortBy';
 import Search from './components/Search';
 
 const fetchFunc = require('./FetchFunc');
-const debug = true;
+const debug = false;
 
 class App extends Component { // 三部分 一部分 submit，一部分 过滤 一部分 content
   constructor(props){
@@ -17,13 +17,14 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 			linksMap: null,
 			tagPool:[], //tag filter
 			user: null, //用户数据
-			status: "content", // "content"， and "submit" 用来控制展示哪一部分
 			filter: null,
       currentLink: {},
 			sort: null,
 			searchInput: '',
 			search: '',
-      editorVisible: false
+			editorVisible: false,
+			currentPage: 0,
+			totalPage: 0,
     };
 		this.buttonClickFunc = this.buttonClickFunc.bind(this);
 		this.convertMapToArray = this.convertMapToArray.bind(this);
@@ -36,11 +37,17 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	}
 
 	changeFilterFunc(e){
-		this.setState({ filter: e.target.innerHTML === "All" ? null : e.target.innerHTML});
+		this.setState({ 
+			filter: e.target.innerHTML === "All" ? null : e.target.innerHTML,
+			currentPage:0,
+		});
 	}
 
 	changeSortFunc(e){
-		this.setState({ sort: e.target.value });
+		this.setState({ 
+			sort: e.target.value,
+			currentPage:0,
+		 });
 	}
 
 	changeSearchFunc(e){
@@ -86,12 +93,11 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	buttonClickFunc = (value, linkId, userId) => {
 
 		if(value === "edit"){
-			//fetchFunc.editPostRequest();
       this.setState({
         currentLink:this.state.linksMap[linkId]
         , editorVisible: true
       });
-      // if(debug) console.log(this.state.linksMap[linkId]);
+      if(debug) console.log(this.state.linksMap[linkId]);
 		}else if(value === "delete"){
 			//console.log("delete key clicked");
 			fetchFunc.callDeletePostRequest(linkId)
@@ -141,6 +147,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 		}
 
 	}
+
 
 	convertMapToArray = () => {
 		let res = [];
@@ -240,7 +247,6 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
         <Content
         	linksToDisplay={this.convertMapToArray()}
 					buttonClickFunc={this.buttonClickFunc}
-					status={this.state.status}
 					user={this.state.user}
         />
       </div>
