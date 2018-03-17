@@ -13,7 +13,7 @@ const PageController = ({  currentPage, totalPage, prePage, nextPage, setPage}) 
   }
 
   return (
-      <div>
+      <div className="page-button">
         <button onClick={prePage}>Prev</button><input placeholder={currentPage} onKeyPress={checkForSubmit}/> / {totalPage}<button onClick={nextPage}>Next</button>
       </div>
   );
