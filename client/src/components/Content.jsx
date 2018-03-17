@@ -20,8 +20,9 @@ class Content extends Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    if(debug)console.log("componentWillReceiveProps", this.props.linksToDisplay, nextProps.linksToDisplay);
+    console.log("componentWillReceiveProps", this.props.linksToDisplay, nextProps.linksToDisplay);
     this.setState({
+       currentPage: 1,
        totalPage: Math.ceil(nextProps.linksToDisplay.length / listNumberPerPage),    
       });
   }
@@ -44,7 +45,12 @@ class Content extends Component{
 
 	prePage = () => {
     if(debug) console.log("prePage",this.state.currentPage);
-		if(this.state.currentPage === 1) return;
+		if(this.state.currentPage === 1){
+      this.setState({
+        currentPage: 1,
+      });
+      return;
+    }
 		this.setState({
 			currentPage: this.state.currentPage - 1,
 		});
@@ -52,7 +58,12 @@ class Content extends Component{
 
 	nextPage = () => {
     if(debug) console.log("nextPage",this.state.currentPage, this.state.totalPage);
-		if(this.state.currentPage >= this.state.totalPage) return;
+		if(this.state.currentPage >= this.state.totalPage){
+      this.setState({
+        currentPage: this.state.totalPage,
+      });
+      return;
+    };
 		this.setState({
 			currentPage: this.state.currentPage + 1,
 		});
@@ -60,7 +71,18 @@ class Content extends Component{
 
 	setPage = (page) => {
     if(debug) console.log("setPage",page, this.state.totalPage);
-		if(page < 1 || page > this.state.totalPage) return;
+    if(page < 1 ){
+      this.setState({
+        currentPage: 1,
+      });
+      return;
+    } 
+    if(page > this.state.totalPage){
+      this.setState({
+        currentPage: this.state.totalPage,
+      });
+      return;
+    }
 		this.setState({
 			currentPage: page,
 		});
