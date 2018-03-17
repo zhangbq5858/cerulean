@@ -4,6 +4,8 @@ import Button from './Button';
 const UrlList = ({ Link, buttonClickFunc, user }) => {
 	// console.log("urllist part data check -> ", buttonClickFunc);
 
+	const urlShowLength = 50;
+
 	const clickFunc = (text) =>  {
 		return buttonClickFunc(text, Link.id, user.id);
 	};
@@ -16,8 +18,8 @@ const UrlList = ({ Link, buttonClickFunc, user }) => {
 	}
 
 	const shortUrl = (url) => {
-		if(url.length > 50){
-			return url.slice(0,47) + "...";
+		if(url.length > urlShowLength){
+			return url.slice(0,urlShowLength - 3) + "...";
 		}
 		return url;
 	}

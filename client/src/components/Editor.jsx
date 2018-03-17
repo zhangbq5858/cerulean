@@ -115,8 +115,8 @@ class Editor extends Component {
         ? 'block'
         : 'none'
     };
-    let disable = 
-      this.props.current === null ? true :false;
+    let disable = this.props.current === null ? true :false;
+    const summaryShowLength = 240;
     return (
     <div className="editor-panel">
       <div className="editor-body" style={visible} >
@@ -136,7 +136,7 @@ class Editor extends Component {
             />
           </div>
           <div>
-            <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} maxLength={240}/>
+            <textarea ref="summary" placeholder="URL Summary" value={this.state.summary} onChange={this.handleSummaryChange} maxLength={summaryShowLength}/>
           </div>
           <div>
             <button type="submit">Save</button>
