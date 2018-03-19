@@ -83,8 +83,9 @@ div .search {
 div .search input {
   background-color: rgb(252, 229, 188);
   margin-top: 10px;
+  margin-bottom: 10px;
   height: 20px;
-  width: 30%;
+  width: 20%;
 }
 
 div .search-button {
@@ -94,10 +95,18 @@ div .search-button {
   font:bold;
   text-align: center;
   margin-left: 10px;
-  border-radius: 45px;
+  border-radius: 50px;
 
 }
 /* Add new URL*/
+
+.editor-form {
+  outline-color: green;
+  outline-style: solid;
+  margin-left: 35%;
+  margin-right:35%;
+  width: 30%;
+}
 .editor-form label {
   font-family: Arial, Helvetica, sans-serif;
   text-align: left;
@@ -112,7 +121,7 @@ div .search-button {
 .editor-form textarea {
   background-color: rgb(252, 229, 188);
   padding: 10px;
-  width: 48%;
+  width: 80%;
 }
 
 .editor-form div input{
@@ -121,7 +130,7 @@ div .search-button {
   vertical-align: middle;
   margin: 5px;
   height: 20px;
-  width: 50%;
+  width: 85%;
 }
 .editor-form div{
   display: block;
@@ -155,6 +164,7 @@ div button[name=add]:hover {
   background-color: rgb(245, 145, 161);
   cursor: pointer;
   margin-right:20px;
+  margin-bottom: 10px;
   padding: 10px 10px;
   width: 60px;
   border-radius: 45px;
@@ -185,7 +195,7 @@ div button[name=add]:hover {
 }
 
 div .select-form {
-  width: 50%;
+  width: 85%;
   display: inline-block;
   text-align: center;
 }

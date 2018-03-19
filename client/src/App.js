@@ -232,16 +232,17 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
         <header className="page-title">SurfVibes</header>
         <UserID user={this.state.user}/>
         <button name="add" onClick={ this.toggleEditorDisplay } > {this.state.editorVisible? 'Save Later': 'Submit'} </button>
-        <Editor
+				<Search
+					changeSearch={this.changeSearchFunc}
+					clickSearch={this.clickSearchFunc}
+				/>
+				<Editor
           visible = {this.state.editorVisible}
           current = {this.state.currentLink}
           handleSubmit = { this.save }
 					tagPool = {this.state.tagPool}
         />
-        <Search
-        	changeSearch={this.changeSearchFunc}
-        	clickSearch={this.clickSearchFunc}
-        	/>
+        
         <FilterAndSortBy
 					changeSortFunc={this.changeSortFunc}
 					changeFilterFunc={this.changeFilterFunc}
