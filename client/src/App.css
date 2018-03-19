@@ -101,11 +101,12 @@ div .search-button {
 /* Add new URL*/
 
 .editor-form {
-  outline-color: green;
+  outline-color:rgb(245, 145, 161);
   outline-style: solid;
   margin-left: 35%;
   margin-right:35%;
   width: 30%;
+  background-color: pink;
 }
 .editor-form label {
   font-family: Arial, Helvetica, sans-serif;
