@@ -37,14 +37,14 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
 	}
 
 	changeFilterFunc(e){
-		this.setState({ 
+		this.setState({
 			filter: e.target.innerHTML === "All" ? null : e.target.innerHTML,
 			currentPage:0,
 		});
 	}
 
 	changeSortFunc(e){
-		this.setState({ 
+		this.setState({
 			sort: e.target.value,
 			currentPage:0,
 		 });
@@ -203,7 +203,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
         if(debug) console.log(link);
         const linksMap = Object.assign({}, this.state.linksMap);
         linksMap[url.id] = link;
-        this.setState({linksMap, editorVisible: !this.state.editorVisible});
+        this.setState({linksMap, editorVisible: !this.state.editorVisible,currentLink:{}});
         if(debug) console.log(this.setState.linksMap.id);
       })
       .catch(error => console.log('Failed to update:', url));
@@ -213,7 +213,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
         if(debug) console.log(link);
         let temp = this.state.linksMap;
         temp[link.id] = link;
-        this.setState({linksMap: temp,editorVisible: !this.state.editorVisible});
+        this.setState({linksMap: temp,editorVisible: !this.state.editorVisible,currentLink:{}});
       })
       .catch(error => console.log('Failed to save ', url));
     }
@@ -238,7 +238,7 @@ class App extends Component { // 三部分 一部分 submit，一部分 过滤 �
           handleSubmit = { this.save }
 					tagPool = {this.state.tagPool}
         />
-        <Search 
+        <Search
         	changeSearch={this.changeSearchFunc}
         	clickSearch={this.clickSearchFunc}
         	/>
