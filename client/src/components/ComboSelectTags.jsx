@@ -51,7 +51,6 @@ class ComboSelectTags extends Component { // two props  tagPool, checkboxItemOnC
                     <select>
                         <option>Select tags</option>
                     </select>
-                    <div className="overSelect"></div>
                 </div>
                 <div id="checkboxes" style={visible}>
                     {this.generagteCheckboxItem()}
