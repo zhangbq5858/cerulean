@@ -213,11 +213,15 @@ div .select-form {
   margin-bottom: 10px;
   background-color: palevioletred;
   font-family: sans-serif;
+}
+#checkboxes input {
+  display: inline-block;
   cursor: pointer;
+  width: 10px;
 }
 
-#checkboxes input:hover {
-  background-color: navajowhite;
+input [type=checkbox]:checked {
+  left: 0;
 }
 
 .selectBox select {
@@ -227,10 +231,11 @@ div .select-form {
 
 #checkboxes label {
   display: block;
+  font-size: 15px;
 }
 
 #checkboxes label:hover {
-  background-color: #1e90ff;
+  background-color: navajowhite;
 }
 
 /* URL display area*/
