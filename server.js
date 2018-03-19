@@ -7,7 +7,7 @@ const link = require('./link');
 const user = require('./user');
 const debug = false;
 
-app.use( express.static('../public') ); // serve any assets by their path under '/' directory (same dir as server.js)
+app.use( express.static('./public') ); // serve any assets by their path under '/' directory (same dir as server.js)
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
 
 
