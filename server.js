@@ -1,13 +1,21 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 4000;
+// const PORT = 4000;
+const PORT = process.env.PORT || 5000;
 
 const link = require('./link');
 const user = require('./user');
 const debug = false;
 
-app.use( express.static('../public') ); // serve any assets by their path under '/' directory (same dir as server.js)
+// Express only serves static assets in production
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/build'));
+// }
+
+// app.use( express.static('/public') ); // serve any assets by their path under '/' directory (same dir as server.js)
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
 
 
