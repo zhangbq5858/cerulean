@@ -7,6 +7,11 @@ const link = require('./link');
 const user = require('./user');
 const debug = false;
 
+// Express only serves static assets in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 app.use( express.static('./public') ); // serve any assets by their path under '/' directory (same dir as server.js)
 app.use( bodyParser.json({ extended: true, type: '*/*' }) );
 
